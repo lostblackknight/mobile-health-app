@@ -37,6 +37,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods: {
+    getUsername() {
+      return null
+    }
   }
 }
 </script>
