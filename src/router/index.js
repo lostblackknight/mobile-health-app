@@ -1,20 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from '@/layout'
-import Home from '@/views/common/Home'
-import Health from '@/views/common/Health'
-import Chat from '@/views/common/Chat'
-import About from '@/views/common/About'
-import Login from '@/views/common/Login'
-import Register from '@/views/common/Register'
+import Layout from '@/views/Layout'
+import Home from '@/views/Home'
+import Health from '@/views/Health'
+import Chat from '@/views/Chat'
+import About from '@/views/About'
+import Login from '@/views/Login'
+import Search from '@/views/Search'
+import City from '@/views/City'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Main',
-    component: Main,
+    name: 'Layout',
+    component: Layout,
     redirect: '/home',
     children: [
       {
@@ -45,9 +46,14 @@ const routes = [
     component: Login
   },
   {
-    path: '/register',
-    name: 'Register',
-    component: Register
+    path: '/search',
+    name: 'Search',
+    component: Search
+  },
+  {
+    path: '/City',
+    name: 'City',
+    component: City
   },
   {
     path: '/:pathMatch(.*)*',

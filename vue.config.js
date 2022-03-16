@@ -33,5 +33,12 @@ module.exports = {
       options[0].title = title
       return options
     })
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: '@import "~@/styles/variables.sass"'
+      }
+    }
   }
 }
