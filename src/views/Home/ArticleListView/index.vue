@@ -12,10 +12,10 @@
 </template>
 
 <script>
-import ListItem from '@/views/Home/ListView/ListItem'
+import ListItem from '@/views/Home/ArticleListView/ListItem'
 
 export default {
-  name: 'ListView',
+  name: 'ArticleListView',
   components: { ListItem },
   data() {
     return {

@@ -54,7 +54,7 @@
 import LocationBox from '@/views/Home/CityBox'
 import SearchBar from '@/views/Home/SearchBar'
 import ServiceArea from '@/views/Home/ServiceArea'
-import ListView from '@/views/Home/ListView'
+import ListView from '@/views/Home/ArticleListView'
 import logo from '@/assets/logo-w.png'
 import { areaList } from '@vant/area-data'
 
