@@ -1,8 +1,8 @@
 <template>
   <div class="container" @click="handleClick">
     <van-icon class="left-icon" name="location" color="#f7f8fa"/>
-    <span class="location" v-if="location">{{ location.province }}·{{ location.city }}</span>
-    <span class="location" v-if="!location">未知</span>
+    <span class="location" v-if="city !== undefined & city.name !== undefined & city.code !== undefined">{{ city.name }}</span>
+    <span class="location" v-else>未知</span>
     <van-icon class="right-icon" name="arrow-down" color="#f7f8fa"/>
   </div>
 </template>
@@ -10,13 +10,8 @@
 <script>
 
 export default {
-  name: 'LocationBox',
-  props: {
-    location: {
-      default: undefined,
-      type: Object
-    }
-  },
+  name: 'CityBox',
+  props: ['city'],
   methods: {
     handleClick() {
       this.$emit('click')

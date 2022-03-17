@@ -101,7 +101,9 @@ export default {
       switch (this.loginType) {
         case 'phone-code':
           // TODO: 发送验证码
-          this.$toast('发送验证码')
+          if (this.$refs.smsCode === undefined || this.$refs.smsCode.countdown === 60) {
+            this.$toast('发送验证码')
+          }
           this.showSmsCode = true
           break
         case 'phone-password':
@@ -130,7 +132,7 @@ export default {
     },
     handlePopupClosed() {
       this.$refs.smsCode.code = ''
-      if (this.$refs.smsCode.countdown <= 0) {
+      if (this.$refs.smsCode.countdown < 0) {
         this.$refs.smsCode.countdown = 60
       }
     },

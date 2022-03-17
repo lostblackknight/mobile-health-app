@@ -7,7 +7,6 @@ import Chat from '@/views/Chat'
 import About from '@/views/About'
 import Login from '@/views/Login'
 import Search from '@/views/Search'
-import City from '@/views/City'
 
 Vue.use(VueRouter)
 
@@ -51,17 +50,13 @@ const routes = [
     component: Search
   },
   {
-    path: '/City',
-    name: 'City',
-    component: City
-  },
-  {
     path: '/:pathMatch(.*)*',
     redirect: '/home'
   }
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 

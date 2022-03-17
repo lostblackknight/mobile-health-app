@@ -18,8 +18,11 @@
         :mask="false"
         @focus="showKeyboard = true"
       />
-      <div class="tip2" v-if="countdown > 0">
+      <div class="tip2" v-if="countdown >= 0">
         <span>{{ countdown }} 秒后重新获取验证码</span>
+      </div>
+      <div class="tip2" v-if="countdown < 0">
+        <span>点击左上角返回，重新获取验证码</span>
       </div>
       <van-number-keyboard
         v-model="code"
@@ -45,9 +48,15 @@ export default {
       timer: null
     }
   },
+  beforeDestroy() {
+    if (this.timer != null) {
+      clearTimeout(this.timer)
+      this.timer = null
+    }
+  },
   methods: {
     setTime() {
-      if (this.countdown <= 0) {
+      if (this.countdown < 0) {
         if (this.timer != null) {
           clearTimeout(this.timer)
           this.timer = null
@@ -74,11 +83,8 @@ export default {
 
 <style lang="sass" scoped>
 .container
-  position: fixed
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
+  width: 100vw
+  height: 100vh
   background-color: #f7f8fa
 
   .header

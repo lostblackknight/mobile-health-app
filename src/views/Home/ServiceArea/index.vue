@@ -131,8 +131,9 @@ export default {
 }
 </script>
 
-<style scoped>
-::v-deep .van-grid-item__content {
-  border-radius: 8px;
-}
+<style lang="sass" scoped>
+.container
+  ::v-deep .van-grid-item__content
+    border-radius: 8px
+
 </style>

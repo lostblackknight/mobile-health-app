@@ -14,17 +14,7 @@
 <script>
 export default {
   name: 'SearchBar',
-  props: {
-    location: {
-      default: () => {
-        return {
-          province: '',
-          city: ''
-        }
-      },
-      type: Object
-    }
-  },
+  props: ['city'],
   data() {
     return {
       value: '',
@@ -33,11 +23,19 @@ export default {
   },
   methods: {
     handleFocus() {
-      const {
-        province,
-        city
-      } = this.location
-      this.$router.push(`/search?province=${province}&city=${city}`)
+      if (this.city !== undefined && this.city.name !== undefined && this.city.code !== undefined) {
+        this.$router.push({
+          path: '/search',
+          query: {
+            city_name: this.city.name,
+            city_code: this.city.code
+          }
+        })
+      } else {
+        this.$router.push({
+          path: '/search'
+        })
+      }
     }
   }
 }
