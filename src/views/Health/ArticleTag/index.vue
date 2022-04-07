@@ -1,16 +1,18 @@
 <template>
-  <div class="article-tag">
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-    <div class="article-tag-item">健康</div>
-  </div>
+  <van-sticky :offset-top="56">
+    <div class="article-tag">
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+      <div class="article-tag-item">健康</div>
+    </div>
+  </van-sticky>
 </template>
 
 <script>
@@ -24,6 +26,8 @@ export default {
   white-space: nowrap
   padding: 8px 0
   overflow-y: auto
+  background-color: white
+  border-bottom: 1px solid rgba(0, 0, 0, 0.13)
 
   &::-webkit-scrollbar
     display: none

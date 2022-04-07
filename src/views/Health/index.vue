@@ -28,9 +28,6 @@
         </van-tab>
       </van-tabs>
     </div>
-
-    <div class="article">
-    </div>
   </div>
 </template>
 
