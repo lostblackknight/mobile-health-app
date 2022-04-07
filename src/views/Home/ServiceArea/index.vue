@@ -23,104 +23,56 @@ export default {
       services: [
         {
           id: 1,
-          icon: 'photo-o',
-          text: '急速咨询',
+          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_962ced976db23b55a78f8871ca672db9.png',
+          text: '问医生',
           badge: '',
-          to: '/health',
+          to: '',
           url: ''
         },
         {
           id: 2,
-          icon: 'photo-o',
-          text: '缴费',
+          icon: 'https://s2.loli.net/2022/04/07/4zbQYvXtrx3asnc.png',
+          text: '挂号',
           badge: '',
           to: '',
           url: ''
         },
         {
           id: 3,
-          icon: 'photo-o',
-          text: '影响·报告',
+          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_25a31d0ccc84df05b3d1335604d8b921.png',
+          text: '缴费',
           badge: '',
           to: '',
           url: ''
         },
         {
           id: 4,
-          icon: 'photo-o',
-          text: '处方',
+          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_426991b1eddf622e60f56c2865d73a97.png',
+          text: '医院导航',
           badge: '',
           to: '',
           url: ''
         },
         {
           id: 5,
-          icon: 'photo-o',
-          text: '住院服务',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 6,
-          icon: 'photo-o',
+          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_cfbaaf2d06f66dc16fef6e9635535063.png',
           text: '核酸检测',
           badge: '',
           to: '',
           url: ''
         },
         {
+          id: 6,
+          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_29cc2be7b347a8241d2419cf4dee9aed.png',
+          text: '新冠疫情',
+          badge: '',
+          to: '',
+          url: ''
+        },
+        {
           id: 7,
-          icon: 'photo-o',
-          text: '新冠疫苗',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 8,
-          icon: 'photo-o',
-          text: '药品器械',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 9,
-          icon: 'photo-o',
-          text: '病历本',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 10,
-          icon: 'photo-o',
-          text: '慢病服务',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 11,
-          icon: 'photo-o',
-          text: '医护上门',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 12,
-          icon: 'photo-o',
-          text: '心里咨询',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 13,
-          icon: 'photo-o',
-          text: '医疗美容',
+          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_d12b11632ef5689a1648ddc46a570b07.png',
+          text: '健康指导',
           badge: '',
           to: '',
           url: ''

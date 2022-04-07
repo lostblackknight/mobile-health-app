@@ -3,6 +3,7 @@ import App from '@/App'
 import router from '@/router'
 import store from '@/store'
 import '@/plugins'
+import 'vant/lib/index.less'
 
 Vue.config.productionTip = false
 

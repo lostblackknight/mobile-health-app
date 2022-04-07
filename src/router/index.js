@@ -7,6 +7,7 @@ import Chat from '@/views/Chat'
 import About from '@/views/About'
 import Login from '@/views/Login'
 import Search from '@/views/Search'
+import Whisper from '@/views/Chat/Whisper'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,11 @@ const routes = [
     path: '/search',
     name: 'Search',
     component: Search
+  },
+  {
+    path: '/whisper/:id',
+    name: 'Whisper',
+    component: Whisper
   },
   {
     path: '/:pathMatch(.*)*',

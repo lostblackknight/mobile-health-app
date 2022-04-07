@@ -21,7 +21,7 @@ import {
   Cell,
   Field,
   Form,
-  CellGroup, Checkbox, PasswordInput, NumberKeyboard, Popup, Toast, Image as VanImage, Sticky, Tab, Tabs
+  CellGroup, Checkbox, PasswordInput, NumberKeyboard, Popup, Toast, Image as VanImage, Sticky, Tab, Tabs, SwipeCell, Tag, Swipe, SwipeItem, Lazyload
 } from 'vant'
 
 Vue.use(Button)
@@ -55,3 +55,8 @@ Vue.use(VanImage)
 Vue.use(Sticky)
 Vue.use(Tab)
 Vue.use(Tabs)
+Vue.use(SwipeCell)
+Vue.use(Tag)
+Vue.use(Swipe)
+Vue.use(SwipeItem)
+Vue.use(Lazyload)
