@@ -5,65 +5,106 @@ import Home from '@/views/Home'
 import Health from '@/views/Health'
 import Chat from '@/views/Chat'
 import About from '@/views/About'
-import Login from '@/views/Login'
 import Search from '@/views/Search'
 import Whisper from '@/views/Chat/Whisper'
+import Account from '@/views/Account'
 
 Vue.use(VueRouter)
 
-const routes = [
+export const constantRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/Login/index'),
+    hidden: true
+  }
+]
+
+export const asyncRoutes = [
   {
     path: '/',
-    name: 'Layout',
     component: Layout,
     redirect: '/home',
     children: [
       {
         path: 'home',
         name: 'Home',
-        component: Home
+        component: Home,
+        meta: {
+          roles: ['patient', 'doctor']
+        }
       },
       {
         path: 'health',
         name: 'Health',
-        component: Health
+        component: Health,
+        meta: {
+          roles: ['patient', 'doctor']
+        }
       },
       {
         path: 'chat',
         name: 'Chat',
-        component: Chat
+        component: Chat,
+        meta: {
+          roles: ['patient', 'doctor']
+        }
       },
       {
         path: 'about',
         name: 'About',
-        component: About
+        component: About,
+        meta: {
+          roles: ['patient', 'doctor']
+        }
       }
     ]
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  {
     path: '/search',
     name: 'Search',
-    component: Search
+    component: Search,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
   },
   {
     path: '/whisper/:id',
     name: 'Whisper',
-    component: Whisper
+    component: Whisper,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
+  },
+  {
+    path: '/account',
+    name: 'Account',
+    component: Account,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
   },
   {
     path: '/:pathMatch(.*)*',
-    redirect: '/home'
+    redirect: '/home',
+    meta: {
+      roles: ['patient', 'doctor']
+    }
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
-  routes
+const createRouter = () => new VueRouter({
+  // mode: 'history', // require service support
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRoutes,
+  mode: 'history'
 })
+
+const router = createRouter()
+
+// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher // reset router
+}
 
 export default router

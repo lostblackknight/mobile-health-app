@@ -1,52 +1,79 @@
 import axios from 'axios'
-import QS from 'qs'
+import store from '@/store'
+import { getToken, setRefreshToken, setToken } from '@/utils/auth'
+import { tokenRefresh } from '@/api/member'
+import router from '@/router'
 
-function getToken() {
-  return 'admin'
-}
-
-// 自定义 axios 实例
-const instance = axios.create({
-  // baseURL 将自动加在 url 前面，除非 url 是一个绝对 URL。
-  baseURL: process.env.VUE_APP_BASE_API,
-  // 配置响应超时时间
-  timeout: 5000,
-  // 序列化 params，如果 params 中包含数组，例如 { ids: [1, 2, 3] }，格式化为 ?id=1&id=2&id=3
-  paramsSerializer: params => {
-    return QS.stringify(params, { arrayFormat: 'repeat' })
-  }
+// create an axios instance
+const service = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  // withCredentials: true, // send cookies when cross-domain requests
+  timeout: 5000 // request timeout
 })
 
-// 添加请求拦截器
-instance.interceptors.request.use(
+// request interceptor
+service.interceptors.request.use(
   config => {
-    // 在发送请求之前做些什么
-    // 添加请求头
-    config.headers.Authorization = `Bearer ${getToken()}`
+    if (store.getters.token) {
+      config.headers.Authorization = `Bearer ${getToken()}`
+    }
     return config
   },
   error => {
-    // 对请求错误做些什么
-    console.error('发送请求失败，错误为：', error)
     return Promise.reject(error)
   }
 )
 
-// 添加响应拦截器
-instance.interceptors.response.use(
+// response interceptor
+service.interceptors.response.use(
   response => {
-    // 2xx 范围内的状态码都会触发该函数
-    // 对响应数据做点什么
-    console.info('获取响应成功，结果为：', response)
-    const { data } = response
-    return data
+    const res = response.data
+    console.log(`success: ${response.config.url} :`, response.data)
+    if (res.code === 13) {
+      // 令牌刷新成功
+    }
+
+    // if the custom code is not 20000, it is judged as an error.
+    if (res.code < 1) {
+      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+
+      }
+      return Promise.reject(new Error(res.message || 'Error'))
+    } else {
+      return res
+    }
   },
   error => {
-    // 超出 2xx 范围的状态码都会触发该函数
-    // 对响应错误做点什么
-    console.error('获取响应失败，错误为：', error)
-    return Promise.reject(error)
+    const res = error.response.data
+    console.log(`error: ${error.response.config.url} :`, error.response.data)
+
+    if (res.code === 10) {
+      // 登录失败
+      return Promise.reject(res)
+    }
+
+    if (res.code === 11) {
+      // 令牌过期
+      tokenRefresh().then(res => {
+        const { access_token, refresh_token } = res.data
+        setToken(access_token)
+        setRefreshToken(refresh_token)
+        error.config.headers.Authorization = `Bearer ${access_token}`
+        return axios(error.config)
+      })
+    }
+
+    if (res.code === 12) {
+      // 令牌刷新失败
+      store.dispatch('member/resetToken').then(() => {
+        // ?
+        router.replace(`/login`)
+      })
+      return Promise.reject(res)
+    }
+    return Promise.reject(res)
   }
 )
 
-export default instance
+export default service

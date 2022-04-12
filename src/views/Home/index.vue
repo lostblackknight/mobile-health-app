@@ -38,13 +38,14 @@
       @opened="handleOpened"
       @closed="handleClosed"
       v-model="showLocationSelector">
-      <van-area ref="area"
-                :area-list="areaList"
-                :value="value"
-                :title="'当前城市: ' + (city.name === undefined ? '未知': city.name)"
-                :columns-num="2"
-                @confirm="handleConfirm"
-                @cancel="handleCancel"
+      <van-area
+        ref="area"
+        :area-list="areaList"
+        :value="value"
+        :title="'当前城市: ' + (city.name === undefined ? '未知': city.name)"
+        :columns-num="2"
+        @confirm="handleConfirm"
+        @cancel="handleCancel"
       />
     </van-popup>
   </div>

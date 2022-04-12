@@ -1,24 +1,25 @@
 <template>
   <div class="container">
     <!-- 头部 -->
-    <div class="header">
-      <van-icon class="close" name="cross" @click="handleClose"/>
-      <van-icon class="logo" :name="logo"/>
-    </div>
+    <!--<div class="header">-->
+    <!--  <van-icon class="close" name="cross" @click="handleClose"/>-->
+    <!--  <van-icon class="logo" :name="logo"/>-->
+    <!--</div>-->
     <!-- 标题 -->
     <div class="title">
       <span>欢迎登录小蜜蜂医疗</span>
     </div>
     <!-- 登录表单 -->
     <div class="login-form">
-      <van-form v-if="loginType === 'phone-password'" @submit="handleSubmit">
+      <van-form ref="loginForm" v-if="loginType === 'phone-password'" @submit="handleSubmit" :show-error="false">
         <van-cell-group inset>
           <van-field
             v-model="phone"
             type="tel"
-            name="username"
+            name="phone"
             label="手机号"
             placeholder="请输入手机号"
+            :rules="[{ validator: phoneValidator, trigger: 'onChange', message: '请输入正确的手机号'}]"
             clearable
           />
           <van-field
@@ -26,17 +27,18 @@
             type="password"
             name="password"
             label="密码"
+            :rules="[{ validator: passwordValidator, trigger: 'onChange', message: '请输入正确的密码' }]"
             placeholder="请输入密码"
             clearable
           />
         </van-cell-group>
         <div style="margin: 40px;">
-          <van-button round block color="#2d70fc" native-type="submit">
+          <van-button :disabled="disabledLoginButton" round block color="#2d70fc" native-type="submit">
             登录
           </van-button>
         </div>
       </van-form>
-      <van-form v-if="loginType === 'phone-code'" @submit="handleSubmit">
+      <van-form v-if="loginType === 'phone-code'" @submit="handleSubmit" :show-error="false">
         <van-cell-group inset>
           <van-field
             v-model="phone"
@@ -45,6 +47,7 @@
             label="手机号"
             placeholder="请输入手机号"
             clearable
+            :rules="[{ validator: phoneValidator, trigger: 'onChange', message: '请输入正确的手机号'}]"
           />
         </van-cell-group>
         <div class="tip">
@@ -81,39 +84,64 @@
 <script>
 import logo from '@/assets/logo.png'
 import SmsCode from '@/views/Login/SmsCode'
+import { sendCode } from '@/api/member'
 
 export default {
   name: 'Login',
   components: { SmsCode },
-
   data() {
     return {
       phone: '17735746553',
       password: '123456',
       logo: logo,
       showSmsCode: false,
-      loginType: 'phone-code',
-      destroySmsCode: false
+      loginType: 'phone-password',
+      destroySmsCode: false,
+      disabledLoginButton: false
     }
   },
   methods: {
+    phoneValidator(val) {
+      return this.validatePhone(val)
+    },
+    passwordValidator(val) {
+      return this.validatePassword(val)
+    },
+    validatePhone(phone) {
+      return phone.length === 11
+    },
+    validatePassword(password) {
+      return password.length > 0
+    },
     handleSubmit() {
       switch (this.loginType) {
         case 'phone-code':
           // TODO: 发送验证码
-          if (this.$refs.smsCode === undefined || this.$refs.smsCode.countdown === 60) {
-            this.$toast('发送验证码')
-          }
-          this.showSmsCode = true
+          sendCode(this.phone)
+            .then(() => {
+              if (this.$refs.smsCode === undefined || this.$refs.smsCode.countdown === 60) {
+                this.$toast('发送验证码')
+              }
+              this.showSmsCode = true
+            }).catch(() => {
+              // 获取验证码频率太高
+              this.showSmsCode = true
+            })
           break
         case 'phone-password':
-          // TODO: 校验用户名和密码登录
-          console.log({
-            phone: this.phone,
+          // 校验用户名和密码登录
+          this.$store.dispatch('member/login', {
+            username: this.phone,
             password: this.password
           })
-          this.$toast('登录成功')
-          this.$router.push('/home')
+            .then(() => {
+              this.$toast('登录成功')
+              this.$router.push({ path: '/' }).catch(() => {
+              })
+            })
+            .catch((error) => {
+              this.$toast(error.message)
+            })
           break
       }
     },
@@ -161,18 +189,18 @@ export default {
 
     .close
       position: absolute
-      left: 0.53333rem
-      top: 0.53333rem
+      left: 16px
+      top: 16px
 
     .logo
       position: absolute
-      right: 0.53333rem
-      top: 0.53333rem
+      right: 16px
+      top: 16px
 
   .title
     text-align: center
     font-size: 24px
-    margin-top: 60px
+    margin-top: 80px
 
   .login-form
     margin-top: 60px

@@ -1,55 +1,57 @@
 <template>
   <div class="container">
-    <div class="header">
-      <div class="settings">
-        <span><van-icon size="0.6rem" name="setting-o"/></span>
+    <div class="top">
+      <div class="header">
+        <div class="settings">
+          <span><van-icon size="0.6rem" name="setting-o" @click="handleSettingClick"/></span>
+        </div>
       </div>
-    </div>
-    <div class="user-container">
-      <div class="user-card">
-        <van-cell>
-          <template #icon>
-            <div class="avatar">
-              <van-image round width="100%" height="100%" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
-            </div>
-          </template>
-          <template #title>
-            <div class="nick-name-wrapper">
-              <span class="nick-name">小蜜蜂</span>
-            </div>
-          </template>
-          <template #label>
-            <span class="authenticate">实名认证</span>
-          </template>
-        </van-cell>
-      </div>
-      <div class="user-info">
-        <van-row>
-          <van-col span="8">
-            <div>
-              <span>0</span>
-            </div>
-            <div>
-              关注
-            </div>
-          </van-col>
-          <van-col span="8">
-            <div>
-              <span>0</span>
-            </div>
-            <div>
-              收藏
-            </div>
-          </van-col>
-          <van-col span="8">
-            <div>
-              <span>0</span>
-            </div>
-            <div>
-              粉丝
-            </div>
-          </van-col>
-        </van-row>
+      <div class="user-container">
+        <div class="user-card">
+          <van-cell>
+            <template #icon>
+              <div class="avatar">
+                <van-image round width="100%" height="100%" :src="avatar"/>
+              </div>
+            </template>
+            <template #title>
+              <div class="nick-name-wrapper">
+                <span class="nick-name">{{ name }}</span>
+              </div>
+            </template>
+            <template #label>
+              <span class="authenticate">{{ status === 0 ? '未实名认证' : '已实名认证' }}</span>
+            </template>
+          </van-cell>
+        </div>
+        <div class="user-info">
+          <van-row>
+            <van-col span="8">
+              <div>
+                <span>0</span>
+              </div>
+              <div>
+                关注
+              </div>
+            </van-col>
+            <van-col span="8">
+              <div>
+                <span>0</span>
+              </div>
+              <div>
+                收藏
+              </div>
+            </van-col>
+            <van-col span="8">
+              <div>
+                <span>0</span>
+              </div>
+              <div>
+                粉丝
+              </div>
+            </van-col>
+          </van-row>
+        </div>
       </div>
     </div>
     <div class="record">
@@ -78,7 +80,22 @@
 
 <script>
 
-export default {}
+import { mapGetters } from 'vuex'
+
+export default {
+  computed: {
+    ...mapGetters([
+      'avatar',
+      'name',
+      'status'
+    ])
+  },
+  methods: {
+    handleSettingClick() {
+      this.$router.push('/account')
+    }
+  }
+}
 </script>
 
 <style lang="sass" scoped>
@@ -86,55 +103,58 @@ export default {}
   background-color: #f7f8fa
   height: 100%
 
-  .header
+  .top
     background-color: #2d70fc
-    position: relative
-    height: 44px
 
-    .settings
-      position: absolute
-      right: 14px
-      top: 14px
-      color: #fffdff
-
-  .user-container
-    background-color: #2d70fc
-    height: 180px
-
-    .user-card
+    .header
       background-color: #2d70fc
+      position: relative
+      height: 44px
 
-      ::v-deep .van-cell
+      .settings
+        position: absolute
+        right: 14px
+        top: 14px
+        color: #fffdff
+
+    .user-container
+      background-color: #2d70fc
+      height: 180px
+
+      .user-card
         background-color: #2d70fc
 
-      .avatar
-        width: 75px
-        height: 75px
-        margin-left: 10px
+        ::v-deep .van-cell
+          background-color: #2d70fc
 
-      .nick-name-wrapper
-        margin-top: 4px
+        .avatar
+          width: 75px
+          height: 75px
+          margin-left: 10px
 
-      .nick-name
+        .nick-name-wrapper
+          margin-top: 4px
+
+        .nick-name
+          color: #fffdff
+          font-size: 24px
+          margin-left: 8px
+
+        .authenticate
+          color: #2d70fc
+          background-color: #fffdff
+          font-size: 11px
+          font-weight: bold
+          margin-left: 10px
+          padding: 2px
+          border: 1px solid rgba(0, 0, 0, 0.15)
+          border-radius: 4px
+
+      .user-info
+        margin-top: 10px
         color: #fffdff
-        font-size: 24px
-        margin-left: 8px
-
-      .authenticate
-        color: #2d70fc
-        background-color: #fffdff
-        font-size: 11px
-        font-weight: bold
-        margin-left: 10px
-        padding: 2px
-        border: 1px solid rgba(0, 0, 0, 0.15)
-        border-radius: 4px
-
-    .user-info
-      margin-top: 10px
-      color: #fffdff
-      font-size: 16px
-      text-align: center
+        font-size: 16px
+        text-align: center
 
   .record
     margin: -20px 14px 0

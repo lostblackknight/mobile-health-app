@@ -71,10 +71,20 @@ export default {
   watch: {
     code(code) {
       if (code.length === 4) {
-        console.log({ code })
-        // TODO 校验验证码登录
-        this.$toast('登录成功')
-        this.$router.push('/home')
+        // console.log({ code })
+        // 校验验证码登录
+        this.$store.dispatch('member/loginBySms', {
+          phone: this.phone,
+          code: code
+        })
+          .then(() => {
+            this.$toast('登录成功')
+            this.$router.push({ path: '/' }).catch(() => {
+            })
+          })
+          .catch((error) => {
+            this.$toast(error.message)
+          })
       }
     }
   }

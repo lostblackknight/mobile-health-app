@@ -4,6 +4,7 @@ import router from '@/router'
 import store from '@/store'
 import '@/plugins'
 import 'vant/lib/index.less'
+import './permission' // permission control
 
 Vue.config.productionTip = false
 
