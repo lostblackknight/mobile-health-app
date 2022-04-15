@@ -8,6 +8,10 @@ import About from '@/views/About'
 import Search from '@/views/Search'
 import Whisper from '@/views/Chat/Whisper'
 import Account from '@/views/Account'
+import Hospital from '@/views/Hospital'
+import SearchResult from '@/views/Search/SearchResult'
+import Dept from '@/views/Dept'
+import Schedule from '@/views/Schedule'
 
 Vue.use(VueRouter)
 
@@ -68,6 +72,14 @@ export const asyncRoutes = [
     }
   },
   {
+    path: '/search/',
+    name: 'SearchResult',
+    component: SearchResult,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
+  },
+  {
     path: '/whisper/:id',
     name: 'Whisper',
     component: Whisper,
@@ -79,6 +91,30 @@ export const asyncRoutes = [
     path: '/account',
     name: 'Account',
     component: Account,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
+  },
+  {
+    path: '/hospital/:id',
+    name: 'Hospital',
+    component: Hospital,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
+  },
+  {
+    path: '/dept/:id',
+    name: 'Dept',
+    component: Dept,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
+  },
+  {
+    path: '/schedule/:hospitalCode/:deptCode',
+    name: 'Schedule',
+    component: Schedule,
     meta: {
       roles: ['patient', 'doctor']
     }

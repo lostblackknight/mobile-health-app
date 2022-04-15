@@ -5,7 +5,7 @@
         <article-list-view/>
       </van-tab>
       <van-tab title="医院">
-        <article-list-view/>
+        <hospital-list-view :hospital-name="keyword" :city="city"/>
       </van-tab>
       <van-tab title="科室">
         <article-list-view/>
@@ -22,13 +22,18 @@
 
 <script>
 import ArticleListView from '@/views/Home/ArticleListView'
+import HospitalListView from '@/views/Search/HospitalListView'
 
 export default {
   name: 'SearchResult',
-  components: { ArticleListView },
+  components: {
+    HospitalListView,
+    ArticleListView
+  },
+  props: ['keyword', 'city'],
   data() {
     return {
-      active: 0
+      active: 1
     }
   }
 }

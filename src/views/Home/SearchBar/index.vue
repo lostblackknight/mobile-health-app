@@ -12,13 +12,15 @@
 </template>
 
 <script>
+import { getList } from '@/utils/cache'
+
 export default {
   name: 'SearchBar',
   props: ['city'],
   data() {
     return {
       value: '',
-      hot: '核酸检测在线预约'
+      hot: getList('search-history') === null ? '请输入搜索关键词' : getList('search-history')[getList('search-history').length - 1]
     }
   },
   methods: {
@@ -27,8 +29,7 @@ export default {
         this.$router.push({
           path: '/search',
           query: {
-            city_name: this.city.name,
-            city_code: this.city.code
+            city: this.city.name
           }
         })
       } else {

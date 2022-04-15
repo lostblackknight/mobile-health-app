@@ -17,16 +17,7 @@
     <!-- 查询建议 -->
     <div v-if="hiddenHistory && !hasSearchResult" class="search-suggest">
       <ul class="suggest-list">
-        <li>莎迪阿德勒</li>
-        <li>是对爱的渴望</li>
-        <li>sd爱德华</li>
-        <li>山东矮达</li>
-        <li>史都安德</li>
-        <li>圣诞阿蒂拉</li>
-        <li>闪电爱逗比</li>
-        <li>沙雕爱豆</li>
-        <li>上单奥迪</li>
-        <li>食道癌的早期症状</li>
+        <li v-for="suggest in suggestList" :key="suggest" @click="onSearch(suggest)">{{ suggest }}</li>
       </ul>
     </div>
 
@@ -50,7 +41,7 @@
     </div>
 
     <div v-if="hasSearchResult" class="search-result">
-      <search-result/>
+      <search-result :keyword="keyword" :city="city"/>
     </div>
 
   </div>
@@ -60,30 +51,59 @@
 
 import SearchResult from '@/views/Search/SearchResult'
 import { getList, clearList, setList } from '@/utils/cache'
+import { getSuggest } from '@/api/search'
 
 export default {
   name: 'Search',
   components: { SearchResult },
   data() {
     return {
-      keyword: '',
+      keyword: undefined,
       hiddenHistory: false,
       hasSearchResult: false,
       hasHistory: true,
-      searchHistory: []
+      searchHistory: [],
+      timer: null,
+      suggestList: [],
+      city: undefined
     }
   },
   watch: {
     keyword(keyword) {
-      if (keyword.length === 0) {
+      if (keyword !== undefined && keyword.length === 0) {
         this.handleClear()
       }
+    },
+    $route: {
+      handler: function(val, oldVal) {
+        this.keyword = this.$route.query.keyword
+        this.city = this.$route.query.city
+        // 查询历史记录
+        if (this.keyword === undefined) {
+          this.hiddenHistory = false
+          this.hasSearchResult = false
+          this.getSearchHistory()
+        } else {
+          this.hiddenHistory = true
+          this.hasSearchResult = true
+        }
+      },
+      // 深度观察监听
+      deep: true
     }
   },
   created() {
-    this.keyword = this.$route.query.keyword ? this.$route.query.keyword : ''
+    this.keyword = this.$route.query.keyword
+    this.city = this.$route.query.city
     // 查询历史记录
-    this.getSearchHistory()
+    if (this.keyword === undefined) {
+      this.hiddenHistory = false
+      this.hasSearchResult = false
+      this.getSearchHistory()
+    } else {
+      this.hiddenHistory = true
+      this.hasSearchResult = true
+    }
   },
   methods: {
     getSearchHistory() {
@@ -95,29 +115,35 @@ export default {
       }
     },
     onSearch(val) {
-      if (val === '') return
-      const query = this.$route.query
+      if (val === '' || val === undefined) return
       this.keyword = val
-      if (query.keyword !== undefined && query.keyword === val) {
-        // 历史记录导致路由重复 BUG 解决
-        this.hasSearchResult = true
-      } else {
-        this.$router.replace({
-          path: '/search',
-          query: {
-            ...query,
-            keyword: val
-          }
-        })
-        this.hasSearchResult = true
-        setList('search-history', val)
-      }
+      setList('search-history', val)
+      this.$router.push({
+        path: '/search',
+        query: {
+          keyword: this.keyword,
+          city: this.city
+        }
+      }).catch(() => {
+      })
     },
     onCancel() {
-      this.$router.push('/home')
+      this.$router.go(-1)
     },
     handleInput() {
       this.hiddenHistory = true
+      if (this.timer != null) {
+        clearTimeout(this.timer)
+      }
+      setTimeout(() => {
+        // 查询检索提示
+        if (this.keyword !== undefined) {
+          getSuggest(this.keyword)
+            .then(({ data }) => {
+              this.suggestList = data.suggest
+            })
+        }
+      }, 500)
     },
     handleClear() {
       this.hiddenHistory = false
@@ -125,11 +151,12 @@ export default {
       if (query.keyword !== undefined) {
         // 清除地址栏上的 keyword
         delete query.keyword
-        this.$router.replace({
+        this.$router.push({
           path: '/search',
           query: {
             ...query
           }
+        }).catch(() => {
         })
         this.hasSearchResult = false
       }

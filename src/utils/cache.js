@@ -3,7 +3,9 @@ export const setList = (key, value) => {
   if (localStorage.getItem(key) != null) {
     const oldList = JSON.parse(localStorage.getItem(key))
     oldList.forEach(item => {
-      tempList.push(item)
+      if (item !== value) {
+        tempList.push(item)
+      }
     })
   }
   tempList.push(value)
