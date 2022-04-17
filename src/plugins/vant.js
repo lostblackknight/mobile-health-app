@@ -21,7 +21,26 @@ import {
   Cell,
   Field,
   Form,
-  CellGroup, Checkbox, PasswordInput, NumberKeyboard, Popup, Toast, Image as VanImage, Sticky, Tab, Tabs, SwipeCell, Tag, Swipe, SwipeItem, Lazyload, TreeSelect
+  CellGroup,
+  Checkbox,
+  PasswordInput,
+  NumberKeyboard,
+  Popup,
+  Toast,
+  Image as VanImage,
+  Sticky,
+  Tab,
+  Tabs,
+  SwipeCell,
+  Tag,
+  Swipe,
+  SwipeItem,
+  Lazyload,
+  TreeSelect,
+  Radio,
+  RadioGroup,
+  DatetimePicker,
+  Calendar, Dialog, PullRefresh
 } from 'vant'
 
 Vue.use(Button)
@@ -61,3 +80,9 @@ Vue.use(Swipe)
 Vue.use(SwipeItem)
 Vue.use(Lazyload)
 Vue.use(TreeSelect)
+Vue.use(Radio)
+Vue.use(RadioGroup)
+Vue.use(DatetimePicker)
+Vue.use(Calendar)
+Vue.use(Dialog)
+Vue.use(PullRefresh)

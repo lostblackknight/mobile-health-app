@@ -9,6 +9,7 @@
         :badge="service.badge"
         :to="service.to"
         :url="service.url"
+        @click="handleClick(service.id)"
       />
     </van-grid>
   </div>
@@ -27,7 +28,7 @@ export default {
           icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_962ced976db23b55a78f8871ca672db9.png',
           text: '问医生',
           badge: '',
-          to: '',
+          to: `/search?keyword=医生&city=${this.city.name}`,
           url: ''
         },
         {
@@ -79,6 +80,17 @@ export default {
           url: ''
         }
       ]
+    }
+  },
+  methods: {
+    handleClick(id) {
+      switch (id) {
+        case 1:
+          this.$store.dispatch('search/setActive', 3)
+          break
+        case 2:
+          this.$store.dispatch('search/setActive', 1)
+      }
     }
   }
 }

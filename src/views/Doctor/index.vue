@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="header" v-if="scheduleDetail">
+    <div class="header">
       <van-row>
         <van-col span="19">
           <van-row>
@@ -102,7 +102,16 @@ export default {
       memberId: undefined,
       schedule: [],
       deptList: [],
-      scheduleDetail: undefined,
+      scheduleDetail: {
+        memberId: undefined,
+        schedules: [],
+        doctorName: undefined,
+        levelName: undefined,
+        hospitalName: undefined,
+        icon: undefined,
+        expert: undefined,
+        illNameList: undefined
+      },
       show: false,
       payInfo: undefined,
       checked: false

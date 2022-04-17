@@ -36,7 +36,10 @@ export function getScheduleDateList(hospitalCode, deptCode) {
   return request({
     url: '/search/schedule/dateList',
     method: 'get',
-    params: { hospitalCode, deptCode }
+    params: {
+      hospitalCode,
+      deptCode
+    }
   })
 }
 
@@ -44,7 +47,11 @@ export function getDoctorList(hospitalCode, deptCode, date) {
   return request({
     url: '/search/schedule/doctorList',
     method: 'get',
-    params: { hospitalCode, deptCode, date }
+    params: {
+      hospitalCode,
+      deptCode,
+      date
+    }
   })
 }
 
@@ -67,6 +74,14 @@ export function getDeptListByDoctorCode(params) {
 export function getDoctorSchedule(params) {
   return request({
     url: '/search/schedule/doctor/schedule',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getDoctorListByDoctorName(params) {
+  return request({
+    url: '/search/schedule/doctorList',
     method: 'get',
     params: params
   })

@@ -4,6 +4,7 @@ const getters = {
   name: state => state.member.name,
   roles: state => state.member.roles,
   status: state => state.member.status,
+  active: state => state.search.active,
   permission_routes: state => state.permission.routes
 }
 

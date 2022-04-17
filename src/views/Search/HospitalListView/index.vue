@@ -7,16 +7,18 @@
       </van-dropdown-menu>
     </div>
     <div class="list-view">
-      <van-list
-        v-model="loading"
-        :error.sync="error"
-        error-text="请求失败，点击重新加载"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <list-item :hospital="hospital" v-for="hospital in hospitalList" :key="hospital.hospitalCode" @click="handleClick"/>
-      </van-list>
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list
+          v-model="loading"
+          :error.sync="error"
+          error-text="请求失败，点击重新加载"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <list-item :hospital="hospital" v-for="hospital in hospitalList" :key="hospital.hospitalCode" @click="handleClick"/>
+        </van-list>
+      </van-pull-refresh>
     </div>
   </div>
 </template>
@@ -31,6 +33,7 @@ export default {
   props: ['city', 'hospitalName'],
   data() {
     return {
+      refreshing: false,
       loading: false,
       finished: false,
       error: false,
@@ -100,7 +103,9 @@ export default {
           value: '其他'
         }
       ],
-      hospitalList: []
+      hospitalList: [],
+      pageNum: 1,
+      pageSize: 5
     }
   },
   methods: {
@@ -113,12 +118,43 @@ export default {
         hospitalName: this.hospitalName,
         city: this.city,
         levelName: this.levelName,
-        className: this.className
+        className: this.className,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
       })
         .then(({ data }) => {
-          this.hospitalList = data
+          data.forEach(item => {
+            this.hospitalList.unshift(item)
+          })
           this.loading = false
           this.finished = true
+          this.refreshing = false
+          this.pageNum++
+        })
+        .catch(() => {
+          this.loading = false
+          this.error = true
+        })
+    },
+    onRefresh() {
+      this.finished = false
+      this.loading = true
+      getHospital({
+        hospitalName: this.hospitalName,
+        city: this.city,
+        levelName: this.levelName,
+        className: this.className,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
+      })
+        .then(({ data }) => {
+          data.forEach(item => {
+            this.hospitalList.unshift(item)
+          })
+          this.loading = false
+          this.finished = true
+          this.refreshing = false
+          this.pageNum++
         })
         .catch(() => {
           this.loading = false
@@ -133,4 +169,8 @@ export default {
 .container
   .list-view
     margin: 10px
+    height: 500px
+
+  ::v-deep .van-pull-refresh__track
+    height: 100vh
 </style>

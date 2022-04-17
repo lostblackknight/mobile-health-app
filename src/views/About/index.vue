@@ -67,11 +67,27 @@
     <div class="tools">
       <div class="title">常用工具</div>
       <van-grid :column-num="4" :border="false">
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/72050630-4abe-411b-91cb-f1b77c53747f.png" text="健康指导"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/1a18e758-4d67-4fc8-920f-f81783ede290.png" text="医院导航"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/072abb93-e37a-42f5-bae8-16d245da6ddb.png" text="新冠疫情"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-05-25/7f32a604-3563-4e58-8775-f4fd429aafa0.png" text="健康码"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-06-04/b583d8d5-9191-4555-945c-037fcafafceb.png" text="我的客服"/>
+        <van-grid-item
+          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-05-25/7f32a604-3563-4e58-8775-f4fd429aafa0.png"
+          text="就诊人"
+          to="/patient"
+        />
+        <van-grid-item
+          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/72050630-4abe-411b-91cb-f1b77c53747f.png"
+          text="健康指导"
+        />
+        <van-grid-item
+          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/1a18e758-4d67-4fc8-920f-f81783ede290.png"
+          text="医院导航"
+        />
+        <van-grid-item
+          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/072abb93-e37a-42f5-bae8-16d245da6ddb.png"
+          text="新冠疫情"
+        />
+        <van-grid-item
+          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-06-04/b583d8d5-9191-4555-945c-037fcafafceb.png"
+          text="我的客服"
+        />
       </van-grid>
     </div>
     <div style="height: 80px;"></div>

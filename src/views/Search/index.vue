@@ -15,7 +15,7 @@
     </div>
 
     <!-- 查询建议 -->
-    <div v-if="hiddenHistory && !hasSearchResult" class="search-suggest">
+    <div v-if="showSearchSuggest" class="search-suggest">
       <ul class="suggest-list">
         <li v-for="suggest in suggestList" :key="suggest" @click="onSearch(suggest)">{{ suggest }}</li>
       </ul>
@@ -41,7 +41,7 @@
     </div>
 
     <div v-if="hasSearchResult" class="search-result">
-      <search-result :keyword="keyword" :city="city"/>
+      <search-result ref="result" :keyword="keyword" :city="city"/>
     </div>
 
   </div>
@@ -61,11 +61,13 @@ export default {
       keyword: undefined,
       hiddenHistory: false,
       hasSearchResult: false,
+      showSearchSuggest: false,
       hasHistory: true,
       searchHistory: [],
       timer: null,
       suggestList: [],
-      city: undefined
+      city: undefined,
+      firstSearch: true
     }
   },
   watch: {
@@ -99,10 +101,12 @@ export default {
     if (this.keyword === undefined) {
       this.hiddenHistory = false
       this.hasSearchResult = false
+      this.showSearchSuggest = false
       this.getSearchHistory()
     } else {
       this.hiddenHistory = true
       this.hasSearchResult = true
+      this.showSearchSuggest = false
     }
   },
   methods: {
@@ -117,13 +121,19 @@ export default {
     onSearch(val) {
       if (val === '' || val === undefined) return
       this.keyword = val
+      this.$store.dispatch('search/setActive', 0)
       setList('search-history', val)
+      this.hasSearchResult = true
+      this.showSearchSuggest = false
+      this.hiddenHistory = true
+      this.firstSearch = false
       this.$router.push({
         path: '/search',
         query: {
           keyword: this.keyword,
           city: this.city
         }
+      }).then(() => {
       }).catch(() => {
       })
     },
@@ -132,6 +142,8 @@ export default {
     },
     handleInput() {
       this.hiddenHistory = true
+      this.showSearchSuggest = true
+      this.hasSearchResult = false
       if (this.timer != null) {
         clearTimeout(this.timer)
       }
@@ -147,6 +159,8 @@ export default {
     },
     handleClear() {
       this.hiddenHistory = false
+      this.hasSearchResult = false
+      this.showSearchSuggest = false
       const query = { ...this.$route.query }
       if (query.keyword !== undefined) {
         // 清除地址栏上的 keyword
@@ -158,7 +172,6 @@ export default {
           }
         }).catch(() => {
         })
-        this.hasSearchResult = false
       }
       this.getSearchHistory()
     },
@@ -196,6 +209,11 @@ export default {
   .search-suggest
     padding-left: 3.2vw
     background: #f7f8fa
+    z-index: 100
+    position: absolute
+    top: 54px
+    left: 0
+    right: 0
 
     .suggest-list
       li

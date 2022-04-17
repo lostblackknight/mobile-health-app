@@ -13,6 +13,9 @@ import SearchResult from '@/views/Search/SearchResult'
 import Dept from '@/views/Dept'
 import Schedule from '@/views/Schedule'
 import Doctor from '@/views/Doctor'
+import Patient from '@/views/Patient'
+import PatientAdd from '@/views/Patient/PatientAdd'
+import PatientEdit from '@/views/Patient/PatientEdit'
 
 Vue.use(VueRouter)
 
@@ -35,7 +38,7 @@ export const asyncRoutes = [
         name: 'Home',
         component: Home,
         meta: {
-          roles: ['patient', 'doctor']
+          roles: ['patient']
         }
       },
       {
@@ -43,7 +46,7 @@ export const asyncRoutes = [
         name: 'Health',
         component: Health,
         meta: {
-          roles: ['patient', 'doctor']
+          roles: ['patient']
         }
       },
       {
@@ -51,7 +54,7 @@ export const asyncRoutes = [
         name: 'Chat',
         component: Chat,
         meta: {
-          roles: ['patient', 'doctor']
+          roles: ['patient']
         }
       },
       {
@@ -59,7 +62,7 @@ export const asyncRoutes = [
         name: 'About',
         component: About,
         meta: {
-          roles: ['patient', 'doctor']
+          roles: ['patient']
         }
       }
     ]
@@ -69,15 +72,7 @@ export const asyncRoutes = [
     name: 'Search',
     component: Search,
     meta: {
-      roles: ['patient', 'doctor']
-    }
-  },
-  {
-    path: '/search/',
-    name: 'SearchResult',
-    component: SearchResult,
-    meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
     }
   },
   {
@@ -85,7 +80,7 @@ export const asyncRoutes = [
     name: 'Whisper',
     component: Whisper,
     meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
     }
   },
   {
@@ -93,7 +88,7 @@ export const asyncRoutes = [
     name: 'Account',
     component: Account,
     meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
     }
   },
   {
@@ -101,7 +96,7 @@ export const asyncRoutes = [
     name: 'Hospital',
     component: Hospital,
     meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
     }
   },
   {
@@ -109,7 +104,7 @@ export const asyncRoutes = [
     name: 'Dept',
     component: Dept,
     meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
     }
   },
   {
@@ -117,7 +112,7 @@ export const asyncRoutes = [
     name: 'Schedule',
     component: Schedule,
     meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
     }
   },
   {
@@ -125,7 +120,31 @@ export const asyncRoutes = [
     name: 'Doctor',
     component: Doctor,
     meta: {
-      roles: ['patient', 'doctor']
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/patient',
+    name: 'Patient',
+    component: Patient,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/patient/add',
+    name: 'PatientAdd',
+    component: PatientAdd,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/patient/edit/:id',
+    name: 'PatientEdit',
+    component: PatientEdit,
+    meta: {
+      roles: ['patient']
     }
   },
   {
