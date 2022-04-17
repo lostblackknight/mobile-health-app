@@ -5,12 +5,12 @@
         <van-col span="22">
           <van-row>
             <van-col>
-              <div class="dept-name">{{ dept.deptName }}</div>
+              <div @click="() => {this.$router.push(`/dept/${dept.hospitalCode}`)}" class="dept-name">{{ dept.deptName }}</div>
             </van-col>
           </van-row>
           <van-row>
             <van-col>
-              <div class="hospital-name">{{ dept.hospitalName }}</div>
+              <div @click="() => {this.$router.push(`/hospital/${dept.hospitalCode}`)}" class="hospital-name">{{ dept.hospitalName }}</div>
             </van-col>
           </van-row>
         </van-col>
@@ -21,7 +21,7 @@
         </van-row>
       </van-row>
     </div>
-    <div class="schedule">
+    <div v-if="scheduleDateList.length > 0" class="schedule">
       <div class="schedule-tag">
         <div class="schedule-tag-item" :data-date="item.date" @click="searchDoctor(item.date)" v-for="item in scheduleDateList" :key="item.date">
           <div class="title1">{{ item.week }}</div>
@@ -29,6 +29,39 @@
           <div><span class="title3" :style="{color: item.status === 1 ? 'green' : 'red'}">{{ item.status === 1 ? '有号' : '无号' }}</span></div>
         </div>
       </div>
+    </div>
+    <div v-if="doctorList.length > 0" class="doctor-list">
+      <div class="doctor-item" @click="goDoctorPage(doctor)" v-for="doctor in doctorList" :key="doctor.doctorCode">
+        <van-row>
+          <van-col span="5">
+            <div class="avatar">
+              <van-image width="100%" height="100%" :src="doctor.icon"/>
+            </div>
+          </van-col>
+          <van-col span="19">
+            <div class="name">
+              <van-row>
+                <van-col span="21">
+                  <span>{{ doctor.doctorName }}</span>
+                </van-col>
+                <van-col>
+                  <span class="status" :style="{backgroundColor: doctor.status === 1 ? '#5acf83' : ''}">{{ doctor.status === 1 ? '有号' : '无号' }}</span>
+                </van-col>
+              </van-row>
+            </div>
+            <div class="level-name"><span>{{ doctor.levelName }}</span></div>
+            <div class="expert"><span>擅长：{{ doctor.expert }}</span></div>
+            <div>
+              <span class="ill" v-for="ill in doctor.illNameList" :key="ill">
+                {{ ill }}
+              </span>
+            </div>
+          </van-col>
+        </van-row>
+      </div>
+    </div>
+    <div v-if="scheduleDateList.length === 0">
+      <span class="tip">当前科室暂无放号</span>
     </div>
   </div>
 </template>
@@ -59,7 +92,7 @@ export default {
     },
     isToday(date) {
       const d = new Date(date)
-      const today = new Date(2022, 3, 3)
+      const today = new Date(2022, 3, 16)
       return d.getFullYear() === today.getFullYear() && d.getMonth() === today.getMonth() && d.getDate() === today.getDate()
     },
     getDept() {
@@ -83,10 +116,12 @@ export default {
             value.day = this.formatDateGetDay(value.date)
             return value
           })
+        }).then(() => {
+          this.searchDoctor('2022-04-16')
         })
     },
     searchDoctor(date) {
-      const items = document.querySelectorAll('.schedule-tag-item')
+      const items = document.querySelectorAll('.container .schedule .schedule-tag-item')
       items.forEach(item => {
         item.classList.remove('schedule-date-item-active')
         const d = item.getAttribute('data-date')
@@ -99,6 +134,11 @@ export default {
         .then(({ data }) => {
           this.doctorList = data
         })
+    },
+    goDoctorPage(doctor) {
+      this.$router.push({
+        path: `/doctor/${doctor.hospitalCode}/${doctor.deptCode}/${doctor.doctorCode}`
+      })
     }
   }
 }
@@ -108,6 +148,11 @@ export default {
 .container
   height: 100%
   background-color: white
+
+  .tip
+    margin-left: 10px
+    font-size: 16px
+    color: #777
 
   .schedule-date-item-active
     background-color: #42b983 !important
@@ -171,5 +216,52 @@ export default {
 
       &:last-child
         margin-right: 10px
+
+  .doctor-list
+    margin-top: 10px
+
+    .doctor-item
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03)
+      height: 120px
+
+      .avatar
+        margin-top: 25px
+        margin-left: 10px
+        width: 60px
+        height: 60px
+
+      .name
+        margin-top: 10px
+        font-size: 16px
+        font-weight: bold
+
+        .status
+          color: white
+          font-weight: normal
+          padding: 2px
+          border-radius: 4px
+          font-size: 12px
+
+      .level-name
+        margin-top: 2px
+        font-size: 14px
+        color: #777
+
+      .expert
+        font-size: 12px
+        color: #777
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+
+      .ill
+        font-size: 10px
+        padding: 1px
+        color: #0095EA
+        background-color: white
+        border-radius: 4px
+
+  ::v-deep .van-image__img
+    border-radius: 50px
 
 </style>

@@ -22,7 +22,7 @@
     </van-sticky>
     <!-- 服务区 -->
     <div class="service-area">
-      <service-area/>
+      <service-area :city="city"/>
     </div>
     <!-- 标题 -->
     <div class="title">

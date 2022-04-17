@@ -18,6 +18,7 @@
 
 export default {
   name: 'ServiceArea',
+  props: ['city'],
   data() {
     return {
       services: [
@@ -34,7 +35,7 @@ export default {
           icon: 'https://s2.loli.net/2022/04/07/4zbQYvXtrx3asnc.png',
           text: '挂号',
           badge: '',
-          to: '',
+          to: `/search?keyword=医院&city=${this.city.name}`,
           url: ''
         },
         {

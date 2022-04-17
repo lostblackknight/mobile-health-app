@@ -12,6 +12,7 @@ import Hospital from '@/views/Hospital'
 import SearchResult from '@/views/Search/SearchResult'
 import Dept from '@/views/Dept'
 import Schedule from '@/views/Schedule'
+import Doctor from '@/views/Doctor'
 
 Vue.use(VueRouter)
 
@@ -115,6 +116,14 @@ export const asyncRoutes = [
     path: '/schedule/:hospitalCode/:deptCode',
     name: 'Schedule',
     component: Schedule,
+    meta: {
+      roles: ['patient', 'doctor']
+    }
+  },
+  {
+    path: '/doctor/:hospitalCode/:deptCode/:doctorCode',
+    name: 'Doctor',
+    component: Doctor,
     meta: {
       roles: ['patient', 'doctor']
     }

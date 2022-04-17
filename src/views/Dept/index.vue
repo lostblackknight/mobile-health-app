@@ -8,7 +8,7 @@
           </div>
         </van-col>
         <van-col span="20">
-          <div class="name">
+          <div class="name" @click="() => {this.$router.push(`/hospital/${hospitalCode}`)}">
             <span>{{ hospital.hospitalName }}</span>
           </div>
         </van-col>
@@ -31,6 +31,9 @@
           <van-cell :key="item.id" v-for="(item) in leftItem" :title="item.text" is-link :to="`/schedule/${hospitalCode}/${item.id}`"/>
         </template>
       </van-tree-select>
+    </div>
+    <div class="doctor-list">
+
     </div>
   </div>
 </template>
