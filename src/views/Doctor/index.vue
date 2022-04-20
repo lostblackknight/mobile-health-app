@@ -13,7 +13,7 @@
           </van-row>
           <van-row>
             <van-col>
-              <div class="hospital-name"><span>{{ scheduleDetail.hospitalName }}</span></div>
+              <div class="line"><span>{{ scheduleDetail.hospitalName }}</span></div>
             </van-col>
           </van-row>
         </van-col>
@@ -78,7 +78,7 @@
       </div>
       <div class="pay-yuYue-info" @click="handleYuYueClick(payInfo.detail.yuYueMax)">
         <div>{{ payInfo.detail.timeType === 'am' ? '00:00-11:59' : '12:00-23:59' }}</div>
-        <div>剩余：{{ payInfo.detail.yuYueMax }}</div>
+        <div>剩余：{{ payInfo.detail.yuYueMax - payInfo.detail.yuYueNum }}</div>
       </div>
       <div>
         <van-button class="confirm-btn" @click="submit" color="#02c8b4" round>确认</van-button>
@@ -168,6 +168,7 @@ export default {
         this.$toast('请选择预约时间范围')
       } else {
         // 跳转信息确认页
+        this.$router.push(`/booking/info/confirm/${this.payInfo.detail.scheduleId}`)
       }
     },
     handleClick(data) {
@@ -223,7 +224,7 @@ export default {
       font-size: 14px
       color: #777
 
-    .hospital-name
+    .line
       font-size: 14px
       margin-top: 4px
       color: #333

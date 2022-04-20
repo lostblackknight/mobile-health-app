@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <van-grid :column-num="4" :gutter="6">
+    <van-grid :column-num="3" :gutter="6">
       <van-grid-item
         v-for="service in services"
         :key="service.id"
@@ -44,7 +44,7 @@ export default {
           icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_25a31d0ccc84df05b3d1335604d8b921.png',
           text: '缴费',
           badge: '',
-          to: '',
+          to: `/payment`,
           url: ''
         },
         {
@@ -52,23 +52,7 @@ export default {
           icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_426991b1eddf622e60f56c2865d73a97.png',
           text: '医院导航',
           badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 5,
-          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_cfbaaf2d06f66dc16fef6e9635535063.png',
-          text: '核酸检测',
-          badge: '',
-          to: '',
-          url: ''
-        },
-        {
-          id: 6,
-          icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_29cc2be7b347a8241d2419cf4dee9aed.png',
-          text: '新冠疫情',
-          badge: '',
-          to: '',
+          to: '/navigation',
           url: ''
         },
         {
@@ -76,7 +60,7 @@ export default {
           icon: 'https://jksx-component.oss-cn-huhehaote.aliyuncs.com/upload_d12b11632ef5689a1648ddc46a570b07.png',
           text: '健康指导',
           badge: '',
-          to: '',
+          to: '/health',
           url: ''
         }
       ]

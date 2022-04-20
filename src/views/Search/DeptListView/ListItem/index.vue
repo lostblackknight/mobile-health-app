@@ -8,7 +8,7 @@
       </van-col>
       <van-col span="16">
         <div class="dept-name">{{ dept.deptName }}</div>
-        <div class="hospital-name"> {{ dept.hospitalName }}</div>
+        <div class="line"> {{ dept.hospitalName }}</div>
       </van-col>
       <van-col>
         <div class="city">{{ dept.city }}</div>
@@ -45,7 +45,7 @@ export default {
     font-weight: bold
     color: #333
     margin-top: 12px
-  .hospital-name
+  .line
     font-size: 14px
     color: #777
   .city

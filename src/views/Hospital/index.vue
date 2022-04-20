@@ -14,7 +14,7 @@
       </van-swipe>
     </div>
     <div class="card">
-      <div class="hospital-name">
+      <div class="line">
         <span>{{ hospital.hospitalName }}</span>
       </div>
       <div class="middle">
@@ -128,7 +128,7 @@ export default {
     background-color: white
     padding-bottom: 20px
 
-    .hospital-name
+    .line
       padding-top: 20px
       padding-left: 14px
       font-weight: bold

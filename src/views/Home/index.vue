@@ -122,7 +122,7 @@ export default {
         top: 10px
 
   .service-area
-    margin: 6px 8px 0 8px
+    margin: 16px 8px 0 8px
 
   .title
     margin: 10px 0 10px 12px

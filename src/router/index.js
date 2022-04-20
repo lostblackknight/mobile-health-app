@@ -9,13 +9,17 @@ import Search from '@/views/Search'
 import Whisper from '@/views/Chat/Whisper'
 import Account from '@/views/Account'
 import Hospital from '@/views/Hospital'
-import SearchResult from '@/views/Search/SearchResult'
 import Dept from '@/views/Dept'
 import Schedule from '@/views/Schedule'
 import Doctor from '@/views/Doctor'
 import Patient from '@/views/Patient'
 import PatientAdd from '@/views/Patient/PatientAdd'
 import PatientEdit from '@/views/Patient/PatientEdit'
+import Payment from '@/views/Payment'
+import Order from '@/views/Order'
+import BookingInfoConfirm from '@/views/BookingInfoConfirm'
+import Navigation from '@/views/Navigation'
+import OrderDetail from '@/views/Order/OrderDetail'
 
 Vue.use(VueRouter)
 
@@ -127,6 +131,46 @@ export const asyncRoutes = [
     path: '/patient',
     name: 'Patient',
     component: Patient,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/payment',
+    name: 'Payment',
+    component: Payment,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/navigation',
+    name: 'Navigation',
+    component: Navigation,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: Order,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/order/detail/:OrderSn',
+    name: 'OrderDetail',
+    component: OrderDetail,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/booking/info/confirm/:id',
+    name: 'BookingInfoConfirm',
+    component: BookingInfoConfirm,
     meta: {
       roles: ['patient']
     }

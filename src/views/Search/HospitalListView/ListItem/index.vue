@@ -7,7 +7,7 @@
         </div>
       </van-col>
       <van-col span="18">
-        <div class="hospital-name"><span>{{ hospital.hospitalName }}</span></div>
+        <div class="line"><span>{{ hospital.hospitalName }}</span></div>
         <div class="info">
           <van-row>
             <van-col span="20">
@@ -56,7 +56,7 @@ export default {
     height: 70px
     width: 70px
 
-  .hospital-name
+  .line
     font-size: 18px
     font-weight: bold
     color: #333

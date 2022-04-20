@@ -56,17 +56,15 @@
     </div>
     <div class="record">
       <div class="title">诊疗记录</div>
-      <van-grid :column-num="4" :border="false">
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/960baba1-c08b-4961-b7a5-a0a9bcbc80d8.png" text="挂号历史"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/6db37519-46fe-4110-b5b9-14f6007fa96d.png" text="缴费单"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/0b09d2a0-c4db-46f4-a081-8445f0c7699c.png" text="在线问诊"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/a9d10bcf-3611-4dcd-ab14-b45993d5c139.png" text="检查"/>
-        <van-grid-item icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/b2ae26aa-b442-4788-9ee1-55264aee1142.png" text="体检"/>
+      <van-grid :column-num="3" :border="false">
+        <van-grid-item to="/order" icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/960baba1-c08b-4961-b7a5-a0a9bcbc80d8.png" text="挂号历史"/>
+        <van-grid-item to="/payment" icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/6db37519-46fe-4110-b5b9-14f6007fa96d.png" text="缴费单"/>
+        <van-grid-item to="/chat" icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/0b09d2a0-c4db-46f4-a081-8445f0c7699c.png" text="在线问诊"/>
       </van-grid>
     </div>
     <div class="tools">
       <div class="title">常用工具</div>
-      <van-grid :column-num="4" :border="false">
+      <van-grid :column-num="3" :border="false">
         <van-grid-item
           icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-05-25/7f32a604-3563-4e58-8775-f4fd429aafa0.png"
           text="就诊人"
@@ -75,18 +73,12 @@
         <van-grid-item
           icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/72050630-4abe-411b-91cb-f1b77c53747f.png"
           text="健康指导"
+          to="/health"
         />
         <van-grid-item
           icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/1a18e758-4d67-4fc8-920f-f81783ede290.png"
           text="医院导航"
-        />
-        <van-grid-item
-          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/072abb93-e37a-42f5-bae8-16d245da6ddb.png"
-          text="新冠疫情"
-        />
-        <van-grid-item
-          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-06-04/b583d8d5-9191-4555-945c-037fcafafceb.png"
-          text="我的客服"
+          to="/navigation"
         />
       </van-grid>
     </div>
@@ -117,7 +109,7 @@ export default {
 <style lang="sass" scoped>
 .container
   background-color: #f7f8fa
-  height: 100%
+  height: 100vh
 
   .top
     background-color: #2d70fc

@@ -10,7 +10,7 @@
           </van-row>
           <van-row>
             <van-col>
-              <div @click="() => {this.$router.push(`/hospital/${dept.hospitalCode}`)}" class="hospital-name">{{ dept.hospitalName }}</div>
+              <div @click="() => {this.$router.push(`/hospital/${dept.hospitalCode}`)}" class="line">{{ dept.hospitalName }}</div>
             </van-col>
           </van-row>
         </van-col>
@@ -165,7 +165,7 @@ export default {
       font-weight: bold
       color: #333333
 
-    .hospital-name
+    .line
       font-size: 12px
       color: #666
       padding-left: 2px
