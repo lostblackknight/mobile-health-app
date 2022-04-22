@@ -80,7 +80,7 @@ export const asyncRoutes = [
     }
   },
   {
-    path: '/whisper/:id',
+    path: '/whisper/:fromId/:toId',
     name: 'Whisper',
     component: Whisper,
     meta: {

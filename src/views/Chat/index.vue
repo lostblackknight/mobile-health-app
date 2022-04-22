@@ -3,11 +3,9 @@
     <div class="nav-bar">
       <van-nav-bar
         title="消息中心"
-        right-text="全部已读"
         fixed
         left-arrow
         @click-left="onClickLeft"
-        @click-right="onClickRight"
       />
     </div>
     <div class="chat-list">
@@ -25,9 +23,6 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1)
-    },
-    onClickRight() {
-      console.log('全部已读')
     }
   }
 }

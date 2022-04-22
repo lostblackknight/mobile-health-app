@@ -40,7 +40,7 @@ import {
   Radio,
   RadioGroup,
   DatetimePicker,
-  Calendar, Dialog, PullRefresh, ActionSheet
+  Calendar, Dialog, PullRefresh, ActionSheet, Uploader
 } from 'vant'
 
 Vue.use(Button)
@@ -87,3 +87,4 @@ Vue.use(Calendar)
 Vue.use(Dialog)
 Vue.use(PullRefresh)
 Vue.use(ActionSheet)
+Vue.use(Uploader)

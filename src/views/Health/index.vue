@@ -11,19 +11,15 @@
     <div class="nav-bar">
       <van-tabs v-model="active" color="#2d70fc" :title-inactive-color="'black'" sticky title-active-color="#2d70fc">
         <van-tab title="食品健康">
-          <article-tag/>
           <article-list-view/>
         </van-tab>
         <van-tab title="运动养生">
-          <article-tag/>
           <article-list-view/>
         </van-tab>
         <van-tab title="体重控制">
-          <article-tag/>
           <article-list-view/>
         </van-tab>
         <van-tab title="慢性疾病">
-          <article-tag/>
           <article-list-view/>
         </van-tab>
       </van-tabs>
@@ -32,12 +28,11 @@
 </template>
 
 <script>
-import ArticleTag from '@/views/Health/ArticleTag'
 import ArticleListView from '@/views/Home/ArticleListView'
 
 export default {
   name: 'Health',
-  components: { ArticleListView, ArticleTag },
+  components: { ArticleListView },
   data() {
     return {
       active: 0

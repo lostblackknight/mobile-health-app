@@ -9,8 +9,11 @@
       <van-col span="19">
         <div class="name">
           <van-row>
-            <van-col span="21">
+            <van-col span="18">
               <span>{{ doctor.doctorName }}</span>
+            </van-col>
+            <van-col>
+              <span class="zi-xun" :style="{backgroundColor: doctor.memberId !== 0 ? '#1e9fff' : ''}">{{ doctor.status === 1 ? '咨询' : '' }}</span>
             </van-col>
             <van-col>
               <span class="status" :style="{backgroundColor: doctor.status === 1 ? '#5acf83' : ''}">{{ doctor.status === 1 ? '有号' : '无号' }}</span>
@@ -64,6 +67,14 @@ export default {
       padding: 2px
       border-radius: 4px
       font-size: 12px
+
+    .zi-xun
+      color: white
+      font-weight: normal
+      padding: 2px
+      border-radius: 4px
+      font-size: 12px
+      margin-right: 4px
 
   .level-name
     margin-top: 2px

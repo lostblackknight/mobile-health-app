@@ -6,13 +6,14 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <list-item @click="handleClick" v-for="item in list" :key="item"/>
+      <list-item :item="item" @click="handleClick" v-for="item in list" :key="item.anotherId"/>
     </van-list>
   </div>
 </template>
 
 <script>
 import ListItem from '@/views/Chat/ChatListView/ListItem'
+import { getChatList, signMessage } from '@/api/message'
 
 export default {
   name: 'ChatListView',
@@ -27,24 +28,20 @@ export default {
   methods: {
     onLoad() {
       // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
-        }
-
-        // 加载状态结束
-        this.loading = false
-
-        // 数据全部加载完成
-        if (this.list.length >= 40) {
+      this.loading = true
+      getChatList()
+        .then(({ data }) => {
+          this.list = data
+          this.loading = false
           this.finished = true
-        }
-      }, 1000)
+        }).catch(() => {
+          this.loading = false
+          this.finished = true
+        })
     },
-    handleClick() {
+    handleClick(item, unsignedMessage) {
       this.$router.push({
-        path: '/whisper/mid10086'
+        path: `/whisper/${item.memberId}/${item.anotherId}`
       })
     }
   }

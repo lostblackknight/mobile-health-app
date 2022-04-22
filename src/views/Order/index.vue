@@ -28,7 +28,7 @@
 
 <script>
 import OrderItem from '@/views/Payment/OrderItem'
-import { getOrderInfoByMemberId, getOrderInfoByMemberIdRecord } from '@/api/order'
+import { getOrderInfoByMemberIdRecord } from '@/api/order'
 
 export default {
   name: 'Order',

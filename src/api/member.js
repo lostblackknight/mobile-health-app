@@ -32,6 +32,13 @@ export function getInfo() {
   })
 }
 
+export function getMemberById(id) {
+  return request({
+    url: `/member/members/${id}`,
+    method: 'get'
+  })
+}
+
 export function sendCode(phone) {
   return request({
     url: `/member/sms/sendCode/${phone}`,

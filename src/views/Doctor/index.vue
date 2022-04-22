@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <van-row>
-        <van-col span="19">
+        <van-col :span="scheduleDetail.memberId !== 0 ? 14: 19">
           <van-row>
             <van-col span="7">
               <div class="doctor-name"><span>{{ scheduleDetail.doctorName }}</span></div>
@@ -20,6 +20,11 @@
         <van-col span="5">
           <div class="icon">
             <van-image :src="scheduleDetail.icon" width="100%" height="100%"/>
+          </div>
+        </van-col>
+        <van-col span="5" v-if="scheduleDetail.memberId !== 0 && $store.getters.uid !== scheduleDetail.memberId">
+          <div class="go-zi-xun">
+            <van-button type="info" @click="handleChat">去咨询</van-button>
           </div>
         </van-col>
       </van-row>
@@ -40,8 +45,8 @@
         <schedule-box :data="scheduleDetail.schedules" @click="handleClick"></schedule-box>
       </div>
     </div>
-    <div class="zi-xun">
-      <div v-if="scheduleDetail.memberId === 0">{{scheduleDetail.doctorName}}医生暂未开通咨询服务</div>
+    <div v-if="scheduleDetail.memberId === 0" class="zi-xun">
+      <div>{{ scheduleDetail.doctorName }}医生暂未开通咨询服务</div>
     </div>
     <van-popup
       v-model="show"
@@ -90,6 +95,7 @@
 <script>
 import { getDeptListByDoctorCode, getDoctorSchedule } from '@/api/search'
 import ScheduleBox from '@/views/Doctor/ScheduleBox'
+import { createChat, isFirstChat } from '@/api/message'
 
 export default {
   name: 'Doctor',
@@ -158,6 +164,20 @@ export default {
         this.checked = false
       }
     },
+    handleChat() {
+      isFirstChat(this.scheduleDetail.memberId)
+        .then(({ data }) => {
+          if (data.isFirst) {
+            createChat({
+              anotherId: this.scheduleDetail.memberId
+            }).then(() => {
+              this.$router.push(`/whisper/${this.$store.getters.uid}/${this.scheduleDetail.memberId}`)
+            })
+          } else {
+            this.$router.push(`/whisper/${this.$store.getters.uid}/${this.scheduleDetail.memberId}`)
+          }
+        })
+    },
     handleClose() {
       const selector = document.querySelector('.pay-yuYue-info')
       selector.classList.remove('pay-active')
@@ -223,6 +243,9 @@ export default {
       margin-left: 4px
       font-size: 14px
       color: #777
+
+    .go-zi-xun
+      margin-top: 8px
 
     .line
       font-size: 14px
