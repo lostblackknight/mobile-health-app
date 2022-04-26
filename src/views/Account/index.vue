@@ -10,10 +10,10 @@
     </div>
     <div class="main">
       <div class="item">
-        <van-cell title="个人资料" is-link to=""/>
+        <van-cell title="个人资料" is-link to="/profile"/>
       </div>
       <div class="item">
-        <van-cell title="账号与安全" is-link to=""/>
+        <van-cell title="账号与安全" is-link to="/account/security"/>
       </div>
       <div class="item">
         <van-cell title-class="center" @click="handleLogout" title="退出登录" clickable/>

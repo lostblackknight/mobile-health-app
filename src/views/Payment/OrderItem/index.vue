@@ -94,7 +94,7 @@ export default {
       }
     },
     onClick() {
-      this.$emit('click', this.order.orderSn)
+      this.$emit('click', this.order.orderSn, this.order.memberId)
     }
   }
 }

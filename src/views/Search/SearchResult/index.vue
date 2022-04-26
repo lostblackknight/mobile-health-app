@@ -14,14 +14,14 @@
         <doctor-list-view ref="doctor" :doctor-name="keyword" :city="city"/>
       </van-tab>
       <van-tab title="文章">
-        <article-list-view ref="article"/>
+        <article-list-view :title="keyword" ref="article"/>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 
 <script>
-import ArticleListView from '@/views/Home/ArticleListView'
+import ArticleListView from '@/views/Search/ArticleListView'
 import HospitalListView from '@/views/Search/HospitalListView'
 import DeptListView from '@/views/Search/DeptListView'
 import DoctorListView from '@/views/Search/DoctorListView'

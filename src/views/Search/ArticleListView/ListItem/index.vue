@@ -1,30 +1,30 @@
 <template>
-  <div class="container">
+  <div class="container" @click="handleClick">
     <van-row>
       <van-col span="4">
         <div class="avatar">
-          <van-image round width="100%" height="100%" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+          <van-image round width="100%" height="100%" :src="article.avatar"/>
         </div>
       </van-col>
-      <van-col span="20">
-        <div class="name"><span>吕小燕</span></div>
-        <div class="hospital"><span>山西省中医院</span></div>
+      <van-col span="16">
+        <div class="name"><span>{{ article.author }}</span></div>
+        <div class="hospital"><span>{{ article.categoryName }}</span></div>
+      </van-col>
+      <van-col>
+        <div class="read-count"><span>阅读 {{ article.readCount }}</span></div>
       </van-col>
     </van-row>
     <van-row>
-      <van-col span="16">
+      <van-col span="22">
         <div class="content">
-          <div class="title"><span>长期便秘苦不堪言，中医教你告别便秘</span></div>
-          <div class="label">
-            <span>#便秘</span>
-            <span>#中医养生</span>
-          </div>
-          <div class="read-count"><span>阅读 936</span></div>
+          <div class="title"><span>{{ article.title }}</span></div>
         </div>
       </van-col>
-      <van-col span="8">
+    </van-row>
+    <van-row>
+      <van-col>
         <div class="cover">
-          <van-image width="100%" height="100%" src="https://img01.yzcdn.cn/vant/cat.jpeg"/>
+          <van-image width="100%" height="100%" :src="article.cover"/>
         </div>
       </van-col>
     </van-row>
@@ -33,7 +33,13 @@
 
 <script>
 export default {
-  name: 'ListItem'
+  name: 'ListItem',
+  props: ['article'],
+  methods: {
+    handleClick() {
+      this.$emit('click', this.article.id)
+    }
+  }
 }
 </script>
 
@@ -48,6 +54,9 @@ export default {
     margin-left: 10px
     height: 40px
     width: 40px
+
+    ::v-deep .van-image__img
+      border-radius: 20px
 
   .name
     margin-top: 10px
@@ -85,15 +94,11 @@ export default {
     right: -8px
     top: 4px
     height: 100px
-    width: 100px
+    width: 160px
 
   .read-count
     font-size: 12px
     margin-left: 10px
     color: rgba(128, 128, 128, 0.92)
-    position: relative
-    bottom: -16px
-
-  ::v-deep .van-image__img
-    border-radius: 20px
+    margin-top: 20px
 </style>

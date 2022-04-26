@@ -96,6 +96,8 @@
 import { getDeptListByDoctorCode, getDoctorSchedule } from '@/api/search'
 import ScheduleBox from '@/views/Doctor/ScheduleBox'
 import { createChat, isFirstChat } from '@/api/message'
+import { checkBooking } from '@/api/order'
+import moment from 'moment'
 
 export default {
   name: 'Doctor',
@@ -132,7 +134,8 @@ export default {
     getDoctorSchedule({
       hospitalCode: this.hospitalCode,
       deptCode: this.deptCode,
-      doctorCode: this.doctorCode
+      doctorCode: this.doctorCode,
+      date: new moment().format('yyyy-MM-DD')
     }).then(({ data }) => {
       this.scheduleDetail = data
     })
@@ -188,7 +191,20 @@ export default {
         this.$toast('请选择预约时间范围')
       } else {
         // 跳转信息确认页
-        this.$router.push(`/booking/info/confirm/${this.payInfo.detail.scheduleId}`)
+        // TODO: 检查是否符合预约时间
+        checkBooking(this.payInfo.detail.scheduleId)
+          .then(({
+            code,
+            message
+          }) => {
+            if (code === 0) {
+              this.$toast(message)
+            } else {
+              this.$router.push(`/booking/info/confirm/${this.payInfo.detail.scheduleId}`)
+            }
+          }).catch(({ message }) => {
+            this.$toast(message)
+          })
       }
     },
     handleClick(data) {
@@ -204,7 +220,8 @@ export default {
       getDoctorSchedule({
         hospitalCode: this.hospitalCode,
         deptCode: this.deptCode,
-        doctorCode: this.doctorCode
+        doctorCode: this.doctorCode,
+        date: new moment().format('yyyy-MM-DD')
       }).then(({ data }) => {
         this.scheduleDetail = data
       })

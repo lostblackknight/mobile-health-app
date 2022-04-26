@@ -20,7 +20,7 @@
               </div>
             </template>
             <template #label>
-              <span class="authenticate">{{ status === 0 ? '未实名认证' : '已实名认证' }}</span>
+              <span class="authenticate">{{ showStatus(status) }}</span>
             </template>
           </van-cell>
         </div>
@@ -31,7 +31,15 @@
                 <span>0</span>
               </div>
               <div>
-                关注
+                浏览
+              </div>
+            </van-col>
+            <van-col span="8">
+              <div>
+                <span>0</span>
+              </div>
+              <div>
+                点赞
               </div>
             </van-col>
             <van-col span="8">
@@ -40,14 +48,6 @@
               </div>
               <div>
                 收藏
-              </div>
-            </van-col>
-            <van-col span="8">
-              <div>
-                <span>0</span>
-              </div>
-              <div>
-                粉丝
               </div>
             </van-col>
           </van-row>
@@ -69,6 +69,12 @@
           icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-05-25/7f32a604-3563-4e58-8775-f4fd429aafa0.png"
           text="就诊人"
           to="/patient"
+        />
+        <van-grid-item
+          v-if="$store.getters.roles.indexOf('doctor') !== -1"
+          icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/883fd341-3f99-4e3d-86ad-caeac2254783.png"
+          text="我的问诊"
+          to="/order/received"
         />
         <van-grid-item
           icon="http://upload.sxyygh.com:8015/ImageServer//data/007/2021-03-11/72050630-4abe-411b-91cb-f1b77c53747f.png"
@@ -101,6 +107,16 @@ export default {
   methods: {
     handleSettingClick() {
       this.$router.push('/account')
+    },
+    showStatus(status) {
+      switch (status) {
+        case 0:
+          return '普通用户'
+        case 1:
+          return '医生'
+        case -1:
+          return '医生认证中'
+      }
     }
   }
 }

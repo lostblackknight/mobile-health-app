@@ -1,5 +1,6 @@
 import request from '@/utils/request'
-import { getRefreshToken, setToken } from '@/utils/auth'
+import { getRefreshToken, getToken, setToken } from '@/utils/auth'
+import axios from 'axios'
 
 export function login(data) {
   return request({
@@ -32,7 +33,29 @@ export function getInfo() {
   })
 }
 
+export function modifyMember(data) {
+  return request({
+    url: '/member/members',
+    method: 'put',
+    data
+  })
+}
+
+export function authToDoctor(data) {
+  return request({
+    url: `/member/doctor/auth`,
+    method: 'put',
+    data
+  })
+}
+
 export function getMemberById(id) {
+  if (id === null || id === undefined) {
+    return request({
+      url: `/member/members/memberId`,
+      method: 'get'
+    })
+  }
   return request({
     url: `/member/members/${id}`,
     method: 'get'
@@ -43,5 +66,19 @@ export function sendCode(phone) {
   return request({
     url: `/member/sms/sendCode/${phone}`,
     method: 'get'
+  })
+}
+
+export function uploadImage(file) {
+  const data = new FormData()
+  data.append('file', file)
+  return axios({
+    url: process.env.VUE_APP_BASE_API + `/thirdparty/oss/upload/image`,
+    method: 'post',
+    data,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${getToken()}`
+    }
   })
 }

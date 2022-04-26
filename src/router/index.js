@@ -20,6 +20,12 @@ import Order from '@/views/Order'
 import BookingInfoConfirm from '@/views/BookingInfoConfirm'
 import Navigation from '@/views/Navigation'
 import OrderDetail from '@/views/Order/OrderDetail'
+import Article from '@/views/Article'
+import Profile from '@/views/Account/Profile'
+import AccountSecurity from '@/views/Account/AccountSecurity'
+import UpdatePassword from '@/views/Account/UpdatePassword'
+import DoctorAuth from '@/views/Account/DoctorAuth'
+import OrderReceived from '@/views/Order/OrderReceived'
 
 Vue.use(VueRouter)
 
@@ -88,9 +94,49 @@ export const asyncRoutes = [
     }
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/account/security',
+    name: 'AccountSecurity',
+    component: AccountSecurity,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/article/:id',
+    name: 'Article',
+    component: Article,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
     path: '/account',
     name: 'Account',
     component: Account,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/account/security/password/:id',
+    name: 'UpdatePassword',
+    component: UpdatePassword,
+    meta: {
+      roles: ['patient']
+    }
+  },
+  {
+    path: '/account/security/doctor/auth/:id',
+    name: 'DoctorAuth',
+    component: DoctorAuth,
     meta: {
       roles: ['patient']
     }
@@ -160,11 +206,27 @@ export const asyncRoutes = [
     }
   },
   {
+    path: '/order/received',
+    name: 'order',
+    component: OrderReceived,
+    meta: {
+      roles: ['doctor']
+    }
+  },
+  {
     path: '/order/detail/:OrderSn',
     name: 'OrderDetail',
     component: OrderDetail,
     meta: {
       roles: ['patient']
+    }
+  },
+  {
+    path: '/order/detail/:OrderSn/:memberId',
+    name: 'OrderDetailDoctor',
+    component: OrderDetail,
+    meta: {
+      roles: ['doctor']
     }
   },
   {

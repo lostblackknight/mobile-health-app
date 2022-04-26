@@ -116,7 +116,6 @@ export default {
     handleSubmit() {
       switch (this.loginType) {
         case 'phone-code':
-          // TODO: 发送验证码
           sendCode(this.phone)
             .then(() => {
               if (this.$refs.smsCode === undefined || this.$refs.smsCode.countdown === 60) {

@@ -49,15 +49,18 @@
           </van-col>
         </van-row>
       </div>
-      <div style="margin: 16px;" v-if="order.orderStatus === 1">
+      <div style="margin: 16px;" v-if="order.orderStatus === 1 && $store.getters.roles.indexOf('doctor') === -1" >
         <van-button round block type="info" native-type="submit" @click="onCancel(order.orderStatus, order.orderSn)">取消预约</van-button>
+      </div>
+      <div style="margin: 16px;" v-if="order.orderStatus === 1 && $store.getters.roles.indexOf('doctor') !== -1">
+        <van-button round block type="info" native-type="submit" @click="onClose(order.orderStatus, order.orderSn)">完成订单</van-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { cancelBooking, getOrderDetailByOrderSn, pay } from '@/api/order'
+import { cancelBooking, closeOrder, getOrderDetailByOrderSn, getOrderDetailByOrderSnAndMemberId, pay } from '@/api/order'
 import moment from 'moment'
 
 export default {
@@ -98,32 +101,61 @@ export default {
     }
   },
   created() {
-    getOrderDetailByOrderSn(this.$route.params.OrderSn)
-      .then(({ data }) => {
-        this.order = data
-        switch (this.order.orderStatus) {
-          case 0:
-            this.statusStyle.color = '#fe7823'
-            this.statusStyle.backgroundColor = '#fdf0e5'
-            break
-          case 1:
-            this.statusStyle.color = '#67C23A'
-            this.statusStyle.backgroundColor = '#e1f3d8'
-            break
-          case -1:
-            this.statusStyle.color = '#909399'
-            this.statusStyle.backgroundColor = '#e9e9eb'
-            break
-          case -2:
-            this.statusStyle.color = '#909399'
-            this.statusStyle.backgroundColor = '#e9e9eb'
-            break
-          case 2:
-            this.statusStyle.color = '#409eff'
-            this.statusStyle.backgroundColor = '#d9ecff'
-            break
-        }
-      })
+    if (this.$route.params.memberId === null || this.$route.params.memberId === undefined) {
+      getOrderDetailByOrderSn(this.$route.params.OrderSn)
+        .then(({ data }) => {
+          this.order = data
+          switch (this.order.orderStatus) {
+            case 0:
+              this.statusStyle.color = '#fe7823'
+              this.statusStyle.backgroundColor = '#fdf0e5'
+              break
+            case 1:
+              this.statusStyle.color = '#67C23A'
+              this.statusStyle.backgroundColor = '#e1f3d8'
+              break
+            case -1:
+              this.statusStyle.color = '#909399'
+              this.statusStyle.backgroundColor = '#e9e9eb'
+              break
+            case -2:
+              this.statusStyle.color = '#909399'
+              this.statusStyle.backgroundColor = '#e9e9eb'
+              break
+            case 2:
+              this.statusStyle.color = '#409eff'
+              this.statusStyle.backgroundColor = '#d9ecff'
+              break
+          }
+        })
+    } else {
+      getOrderDetailByOrderSnAndMemberId(this.$route.params.OrderSn, this.$route.params.memberId)
+        .then(({ data }) => {
+          this.order = data
+          switch (this.order.orderStatus) {
+            case 0:
+              this.statusStyle.color = '#fe7823'
+              this.statusStyle.backgroundColor = '#fdf0e5'
+              break
+            case 1:
+              this.statusStyle.color = '#67C23A'
+              this.statusStyle.backgroundColor = '#e1f3d8'
+              break
+            case -1:
+              this.statusStyle.color = '#909399'
+              this.statusStyle.backgroundColor = '#e9e9eb'
+              break
+            case -2:
+              this.statusStyle.color = '#909399'
+              this.statusStyle.backgroundColor = '#e9e9eb'
+              break
+            case 2:
+              this.statusStyle.color = '#409eff'
+              this.statusStyle.backgroundColor = '#d9ecff'
+              break
+          }
+        })
+    }
   },
   methods: {
     onClickLeft() {
@@ -137,6 +169,16 @@ export default {
         .then(({ message }) => {
           this.$toast(message)
           this.$router.replace('/payment')
+        })
+        .catch(({ message }) => {
+          this.$toast(message)
+        })
+    },
+    onClose(status, orderSn) {
+      closeOrder(orderSn)
+        .then(({ message }) => {
+          this.$toast(message)
+          this.$router.replace('/order/received')
         })
         .catch(({ message }) => {
           this.$toast(message)

@@ -222,6 +222,9 @@ export default {
         border-bottom: 1px solid #ccc
         color: #212121
         font-size: 3.46667vw
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
 
   .search-history
     background-color: white

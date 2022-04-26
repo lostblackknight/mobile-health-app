@@ -2,25 +2,17 @@
   <div class="container">
     <div class="header">
       <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item>1</van-swipe-item>
-        <van-swipe-item>2</van-swipe-item>
-        <van-swipe-item>3</van-swipe-item>
-        <van-swipe-item>4</van-swipe-item>
+        <div class="swipe-item" v-for="article in articleList" :key="article.id" @click="handleClick(article)">
+          <van-swipe-item>
+            <van-image width="100%" height="100%" :src="article.cover"/>
+          </van-swipe-item>
+        </div>
       </van-swipe>
     </div>
     <div class="nav-bar">
       <van-tabs v-model="active" color="#2d70fc" :title-inactive-color="'black'" sticky title-active-color="#2d70fc">
-        <van-tab title="食品健康">
-          <article-list-view/>
-        </van-tab>
-        <van-tab title="运动养生">
-          <article-list-view/>
-        </van-tab>
-        <van-tab title="体重控制">
-          <article-list-view/>
-        </van-tab>
-        <van-tab title="慢性疾病">
-          <article-list-view/>
+        <van-tab v-for="category in categoryList" :key="category.id" :title="category.name">
+          <article-list-view :category-id="category.id"/>
         </van-tab>
       </van-tabs>
     </div>
@@ -28,14 +20,36 @@
 </template>
 
 <script>
-import ArticleListView from '@/views/Home/ArticleListView'
+import ArticleListView from '@/views/Search/ArticleListView'
+import { getCategoryList } from '@/api/topic'
+import { getArticleList } from '@/api/search'
 
 export default {
   name: 'Health',
   components: { ArticleListView },
   data() {
     return {
-      active: 0
+      active: 0,
+      categoryList: [],
+      articleList: []
+    }
+  },
+  created() {
+    getCategoryList()
+      .then(({ data }) => {
+        this.categoryList = data
+      })
+
+    getArticleList({
+      pageNum: 1,
+      pageSize: 4
+    }).then(({ data }) => {
+      this.articleList = data
+    })
+  },
+  methods: {
+    handleClick(article) {
+      this.$router.push(`/article/${article.id}`)
     }
   }
 }
@@ -47,12 +61,8 @@ export default {
   background-color: #f7f8fa
 
   .header
-    .my-swipe .van-swipe-item
-      color: #fff
-      font-size: 20px
-      line-height: 180px
-      text-align: center
-      background-color: #39a9ed
+    .swipe-item
+      height: 180px
 
   .nav-bar
     color: black

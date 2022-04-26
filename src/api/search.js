@@ -32,13 +32,22 @@ export function getDept(params) {
   })
 }
 
-export function getScheduleDateList(hospitalCode, deptCode) {
+export function getArticleList(params) {
+  return request({
+    url: '/search/article',
+    method: 'get',
+    params: params
+  })
+}
+
+export function getScheduleDateList(hospitalCode, deptCode, date) {
   return request({
     url: '/search/schedule/dateList',
     method: 'get',
     params: {
       hospitalCode,
-      deptCode
+      deptCode,
+      date
     }
   })
 }

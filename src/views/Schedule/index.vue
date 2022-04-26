@@ -68,6 +68,7 @@
 
 <script>
 import { getDept, getDoctorList, getScheduleDateList } from '@/api/search'
+import moment from 'moment'
 
 export default {
   name: 'Schedule',
@@ -91,9 +92,9 @@ export default {
       return d.getDate() < 10 ? '0' + d.getDate() : d.getDate()
     },
     isToday(date) {
-      const d = new Date(date)
-      const today = new Date(2022, 3, 16)
-      return d.getFullYear() === today.getFullYear() && d.getMonth() === today.getMonth() && d.getDate() === today.getDate()
+      const checkDate = new moment(new Date(date)).format('yyyy-MM-DD')
+      const today = new moment().format('yyyy-MM-DD')
+      return checkDate === today
     },
     getDept() {
       getDept({
@@ -106,7 +107,7 @@ export default {
         })
     },
     getScheduleDateList() {
-      getScheduleDateList(this.hospitalCode, this.deptCode)
+      getScheduleDateList(this.hospitalCode, this.deptCode, new moment().format('yyyy-MM-DD'))
         .then(({ data }) => {
           this.scheduleDateList = data
           this.scheduleDateList.map(value => {
@@ -117,7 +118,7 @@ export default {
             return value
           })
         }).then(() => {
-          this.searchDoctor('2022-04-16')
+          this.searchDoctor(this.scheduleDateList[0].date)
         })
     },
     searchDoctor(date) {

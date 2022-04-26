@@ -24,16 +24,22 @@
           <div class="tip" v-if="doctorList.length === 0"> 暂无数据</div>
           <doctor-list-item :doctor="doctor" v-for="doctor in doctorList" :key="doctor.doctorCode" @click="handleDoctorClick"/>
         </div>
+        <div class="doctor">
+          <div class="title">文章</div>
+          <div class="tip" v-if="articleList.length === 0"> 暂无数据</div>
+          <article-list-item :article="article" v-for="article in articleList" :key="article.id" @click="handleArticleClick"/>
+        </div>
       </van-list>
     </div>
   </div>
 </template>
 
 <script>
-import { getDept, getDoctorListByDoctorName, getHospital } from '@/api/search'
+import { getArticleList, getDept, getDoctorListByDoctorName, getHospital } from '@/api/search'
 import DeptListItem from '@/views/Search/DeptListView/ListItem'
 import DoctorListItem from '@/views/Search/DoctorListView/ListItem'
 import HospitalListItem from '@/views/Search/HospitalListView/ListItem'
+import ArticleListItem from '@/views/Search/ArticleListView/ListItem'
 
 export default {
   name: 'AllListView',
@@ -41,7 +47,8 @@ export default {
   components: {
     DeptListItem,
     DoctorListItem,
-    HospitalListItem
+    HospitalListItem,
+    ArticleListItem
   },
   data() {
     return {
@@ -50,7 +57,8 @@ export default {
       finished: false,
       deptList: [],
       doctorList: [],
-      hospitalList: []
+      hospitalList: [],
+      articleList: []
     }
   },
   methods: {
@@ -81,6 +89,13 @@ export default {
 
         this.hospitalList = hospitalList.data
 
+        const articleList = await getArticleList({
+          title: this.keyword,
+          pageSize: 3
+        })
+
+        this.articleList = articleList.data
+
         this.loading = false
         this.finished = true
       } catch (e) {
@@ -102,6 +117,9 @@ export default {
     },
     handleHospitalClick(hospitalCode) {
       this.$router.push(`/hospital/${hospitalCode}`)
+    },
+    handleArticleClick({ id }) {
+      this.$router.push(`/article/${id}`)
     }
   }
 }

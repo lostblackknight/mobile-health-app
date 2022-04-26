@@ -18,10 +18,10 @@
           </van-col>
         </van-row>
       </div>
-      <template #right>
-        <van-button class="set-btn" color="#fe9c00" square text="标记为已读"/>
-        <van-button class="del-btn" color="#ff5a68" square text="删除"/>
-      </template>
+      <!--<template #right>-->
+      <!--  <van-button class="set-btn" color="#fe9c00" square text="标记为已读"/>-->
+      <!--  <van-button class="del-btn" color="#ff5a68" square text="删除"/>-->
+      <!--</template>-->
     </van-swipe-cell>
   </div>
 </template>

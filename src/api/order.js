@@ -14,6 +14,27 @@ export function getOrderDetailByOrderSn(orderSn) {
   })
 }
 
+export function getOrderDetailByOrderSnAndMemberId(orderSn, memberId) {
+  return request({
+    url: `/order/orders/${memberId}/${orderSn}`,
+    method: 'get'
+  })
+}
+
+export function getClosedOrder() {
+  return request({
+    url: `/order/orders/closed`,
+    method: 'get'
+  })
+}
+
+export function closeOrder(orderSn) {
+  return request({
+    url: `/order/orders/close/${orderSn}`,
+    method: 'put'
+  })
+}
+
 export function pay(orderSn) {
   return request({
     url: `/order/payment/${orderSn}`,
@@ -47,5 +68,19 @@ export function getOrderInfoByMemberIdRecord(params) {
     url: `/order/orders/memberId/record`,
     method: 'get',
     params: params
+  })
+}
+
+export function getReceivedOrder() {
+  return request({
+    url: `/order/orders/received`,
+    method: 'get'
+  })
+}
+
+export function checkBooking(scheduleId) {
+  return request({
+    url: `/order/orders/check/booking/${scheduleId}`,
+    method: 'get'
   })
 }

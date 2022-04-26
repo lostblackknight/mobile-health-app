@@ -63,7 +63,7 @@ module.exports = {
       'after': true
     }],
     'new-cap': [2, {
-      'newIsCap': true,
+      'newIsCap': false,
       'capIsNew': false
     }],
     'new-parens': 2,
