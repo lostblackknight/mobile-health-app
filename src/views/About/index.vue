@@ -28,7 +28,7 @@
           <van-row>
             <van-col span="8">
               <div>
-                <span>0</span>
+                <span>{{ userArticleReadList.length }}</span>
               </div>
               <div>
                 浏览
@@ -36,7 +36,7 @@
             </van-col>
             <van-col span="8">
               <div>
-                <span>0</span>
+                <span>{{ userArticleLikeList.length }}</span>
               </div>
               <div>
                 点赞
@@ -44,7 +44,7 @@
             </van-col>
             <van-col span="8">
               <div>
-                <span>0</span>
+                <span>{{ userArticleStarList.length }}</span>
               </div>
               <div>
                 收藏
@@ -95,6 +95,7 @@
 <script>
 
 import { mapGetters } from 'vuex'
+import { getUserArticleLikeList, getUserArticleReadList, getUserArticleStarList } from '@/api/topic'
 
 export default {
   computed: {
@@ -103,6 +104,24 @@ export default {
       'name',
       'status'
     ])
+  },
+  data() {
+    return {
+      userArticleLikeList: [],
+      userArticleStarList: [],
+      userArticleReadList: []
+    }
+  },
+  created() {
+    getUserArticleLikeList().then(({ data }) => {
+      this.userArticleLikeList = data
+    })
+    getUserArticleReadList().then(({ data }) => {
+      this.userArticleReadList = data
+    })
+    getUserArticleStarList().then(({ data }) => {
+      this.userArticleStarList = data
+    })
   },
   methods: {
     handleSettingClick() {

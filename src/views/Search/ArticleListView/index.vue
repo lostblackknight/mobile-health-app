@@ -50,7 +50,7 @@ export default {
       })
         .then(({ data }) => {
           data.forEach(item => {
-            this.articleList.unshift(item)
+            this.articleList.push(item)
           })
           this.loading = false
           this.finished = true
@@ -76,7 +76,7 @@ export default {
       })
         .then(({ data }) => {
           data.forEach(item => {
-            this.articleList.unshift(item)
+            this.articleList.push(item)
           })
           this.loading = false
           this.finished = true

@@ -15,7 +15,7 @@
           <div class="category">文章类型：{{ article.categoryName }}</div>
         </van-col>
         <van-col>
-          <div class="read-count">浏览数量：{{ article.readCount }}</div>
+          <div class="read-count">浏览数量：{{ article.readCount === null ? '0' : article.readCount}}</div>
         </van-col>
       </van-row>
       <div class="intro">
@@ -31,13 +31,13 @@
             </div>
           </van-col>
           <van-col span="3">
-            <div class="like" @click="handleLike(article.id)">
-              <van-icon name="like" />
+            <div :class="like ? 'like' : 'unLike'" @click="handleLike(article.id)">
+              <van-icon name="like"/>
             </div>
           </van-col>
           <van-col>
-            <div class="star">
-              <van-icon name="star" @click="handleStar(article.id)" />
+            <div :class="star ? 'star' : 'unStar'">
+              <van-icon name="star" @click="handleStar(article.id)"/>
             </div>
           </van-col>
         </van-row>
@@ -51,6 +51,7 @@
 
 <script>
 import { getArticleList } from '@/api/search'
+import { cancelLike, cancelStar, confirmLike, confirmRead, confirmStar, isLike, isStar } from '@/api/topic'
 
 export default {
   name: 'Article',
@@ -70,7 +71,9 @@ export default {
         role: undefined,
         title: undefined,
         uid: undefined
-      }
+      },
+      like: false,
+      star: false
     }
   },
   created() {
@@ -80,16 +83,43 @@ export default {
     }).then(({ data }) => {
       this.article = data[0]
     })
+    isLike(this.id).then(({ data }) => {
+      this.like = data
+    })
+    isStar(this.id).then(({ data }) => {
+      this.star = data
+    })
+    confirmRead(this.id)
   },
   methods: {
     onClickLeft() {
       this.$router.go(-1)
     },
     handleLike(id) {
-      console.log(id)
+      if (this.like) {
+        // 喜欢状态，去取消
+        cancelLike(id).then(() => {
+          this.like = false
+        })
+      } else {
+        // 不喜欢，去添加
+        confirmLike(id).then(() => {
+          this.like = true
+        })
+      }
     },
     handleStar(id) {
-      console.log(id)
+      if (this.star) {
+        // 喜欢状态，去取消
+        cancelStar(id).then(() => {
+          this.star = false
+        })
+      } else {
+        // 不喜欢，去添加
+        confirmStar(id).then(() => {
+          this.star = true
+        })
+      }
     }
   }
 }
@@ -117,15 +147,25 @@ export default {
       margin-top: 10px
       color: #777
 
-    .like
+    .unLike
       margin-top: 12px
       font-size: 22px
       color: #61666d
 
-    .star
+    .unStar
       margin-top: 10.5px
       font-size: 22px
       color: #61666d
+
+    .like
+      margin-top: 12px
+      font-size: 22px
+      color: rgba(255, 0, 0, 0.66)
+
+    .star
+      margin-top: 10.5px
+      font-size: 22px
+      color: rgba(255, 255, 0, 0.66)
 
     .intro
       margin: 20px

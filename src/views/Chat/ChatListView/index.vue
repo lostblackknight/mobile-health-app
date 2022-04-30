@@ -13,7 +13,7 @@
 
 <script>
 import ListItem from '@/views/Chat/ChatListView/ListItem'
-import { getChatList, signMessage } from '@/api/message'
+import { getChatList } from '@/api/message'
 
 export default {
   name: 'ChatListView',

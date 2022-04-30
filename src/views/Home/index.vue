@@ -5,14 +5,20 @@
       <div class="nav-bar">
         <!-- 导航栏头部 -->
         <div class="nav-bar-top">
-          <!-- 左侧城市盒子 -->
-          <div class="location-box">
-            <location-box :city="city" @click="handleClick"/>
-          </div>
-          <!-- 右侧 logo -->
-          <div class="logo">
-            <van-icon class="logo" :name="logo"/>
-          </div>
+          <van-row>
+            <van-col>
+              <!-- 左侧城市盒子 -->
+              <div class="location-box">
+                <location-box :city="city" @click="handleClick"/>
+              </div>
+            </van-col>
+            <van-col>
+              <!-- 右侧 logo -->
+              <div class="logo">
+                <van-icon class="logo" :name="logo"/>
+              </div>
+            </van-col>
+          </van-row>
         </div>
         <!-- 导航栏底部搜索栏 -->
         <div class="search-bar">
@@ -58,6 +64,7 @@ import ServiceArea from '@/views/Home/ServiceArea'
 import ListView from '@/views/Search/ArticleListView'
 import logo from '@/assets/logo-w.png'
 import { areaList } from '@vant/area-data'
+import AMapLoader from '@amap/amap-jsapi-loader'
 
 export default {
   name: 'Home',
@@ -70,8 +77,8 @@ export default {
   data() {
     return {
       city: {
-        code: '140400',
-        name: '长治市'
+        code: '',
+        name: ''
       },
       logo: logo,
       showLocationSelector: false,
@@ -79,7 +86,31 @@ export default {
       value: ''
     }
   },
+  created() {
+    this.loadLocation()
+  },
   methods: {
+    loadLocation() {
+      window._AMapSecurityConfig = {
+        securityJsCode: '5de61f73c434cbed2c68ae4001276c7f'
+      }
+
+      AMapLoader.load({
+        key: 'c46c1744e87ec48659b517ddb50a1419',
+        version: '2.0',
+        plugins: ['AMap.CitySearch']
+      }).then((AMap) => {
+        const citySearch = new AMap.CitySearch()
+        citySearch.getLocalCity((status, result) => {
+          if (status === 'complete' && result.info === 'OK') {
+            console.log(result)
+            const { adcode, city } = result
+            this.city.code = adcode
+            this.city.name = city
+          }
+        })
+      })
+    },
     handleClick() {
       this.showLocationSelector = true
     },
@@ -115,17 +146,20 @@ export default {
         position: absolute
         left: 10px
         top: 16px
+        font-size: 16px
 
       .logo
         position: absolute
         right: 10px
         top: 10px
+        font-size: 16px
 
   .service-area
     margin: 16px 8px 0 8px
 
   .title
     margin: 10px 0 10px 12px
+    font-size: 22px
 
     span
       font-weight: 550

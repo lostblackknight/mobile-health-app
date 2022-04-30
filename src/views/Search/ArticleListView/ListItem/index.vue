@@ -11,7 +11,7 @@
         <div class="hospital"><span>{{ article.categoryName }}</span></div>
       </van-col>
       <van-col>
-        <div class="read-count"><span>阅读 {{ article.readCount }}</span></div>
+        <div class="read-count"><span>阅读 {{ article.readCount == null ? '0' : article.readCount}}</span></div>
       </van-col>
     </van-row>
     <van-row>
