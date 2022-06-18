@@ -15,7 +15,7 @@
             <van-col>
               <!-- 右侧 logo -->
               <div class="logo">
-                <van-icon class="logo" :name="logo"/>
+                <van-icon class="logo" name="https://bee-health.oss-cn-beijing.aliyuncs.com/bee-health/logo-w.png"/>
               </div>
             </van-col>
           </van-row>

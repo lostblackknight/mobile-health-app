@@ -47,7 +47,7 @@
     <div class="schedule-info">
       <van-cell-group inset>
         <van-cell title="就诊日期" :value="scheduleInfo.date"></van-cell>
-        <van-cell title="就诊时间" :value="(scheduleInfo.week + ' ' + (scheduleInfo.timeType === 0 ? '上午': '下午'))"></van-cell>
+        <van-cell title="就诊时间" :value="(scheduleInfo.week + ' ' + (scheduleInfo.timeType === 'am' ? '上午': '下午'))"></van-cell>
         <van-cell title="挂号费" :value="scheduleInfo.amount"></van-cell>
         <van-cell title="就诊人" :value="patient.name" is-link @click="addPatient"/>
       </van-cell-group>

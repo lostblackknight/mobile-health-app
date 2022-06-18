@@ -33,7 +33,7 @@ export default {
         },
         {
           id: 2,
-          icon: 'https://s2.loli.net/2022/04/07/4zbQYvXtrx3asnc.png',
+          icon: 'https://bee-health.oss-cn-beijing.aliyuncs.com/bee-health/4zbQYvXtrx3asnc.png',
           text: '挂号',
           badge: '',
           to: `/search?keyword=医院&city=${this.city.name}`,

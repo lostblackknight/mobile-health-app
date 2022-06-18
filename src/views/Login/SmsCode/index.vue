@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="header">
-      <van-icon class="logo" :name="logo"/>
+      <van-icon class="logo" name="https://bee-health.oss-cn-beijing.aliyuncs.com/bee-health/logo-w.png"/>
     </div>
     <div class="title">
       <span>输入验证码</span>
