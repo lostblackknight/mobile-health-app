@@ -8,7 +8,8 @@ function resolve(dir) {
 }
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  // 打包成 APP production 使用 './', 部署在服务器 production 使用 '/'
+  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   outputDir: 'dist',
   lintOnSave: process.env.NODE_ENV !== 'production',
   productionSourceMap: false,

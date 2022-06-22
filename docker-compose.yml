@@ -8,12 +8,16 @@ services:
     image: bee-health-app:latest
     container_name: bee-health-app
     env_file:
-      - ./docker/bee-health-app.env
+      - ./docker/bee-health-app/env/bee-health-app.env
+    volumes:
+      - ./docker/bee-health-app/volumes/nginx/logs:/var/log/nginx
+      - ./docker/bee-health-app/volumes/nginx/html:/usr/share/nginx/html
+      - ./docker/bee-health-app/volumes/nginx/conf/:/etc/nginx/conf.d
+      - ./docker/bee-health-app/volumes/nginx/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - bee-health
     ports:
       - "9527:80"
-      - "9537:443"
     restart: always
 
 networks:
