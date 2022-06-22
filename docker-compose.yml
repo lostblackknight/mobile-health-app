@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  bee-health-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bee-health-app:latest
+    container_name: bee-health-app
+    env_file:
+      - docker/bee-health-app.env
+    networks:
+      - bee-health
+    ports:
+      - "9527:80"
+      - "443:443"
+    restart: always

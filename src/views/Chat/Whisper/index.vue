@@ -121,7 +121,7 @@ export default {
       if (this.socket != null && this.socket.readyState === WebSocket.OPEN) {
         return
       }
-      this.socket = new WebSocket(`ws://localhost:7001/api/message/ws/chat/${this.fromId}`)
+      this.socket = new WebSocket(`${process.env.VUE_APP_BASE_WS_API}/message/ws/chat/${this.fromId}`)
       this.socket.onopen = () => {
         console.log('ws 建立连接')
       }
