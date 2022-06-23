@@ -12,8 +12,7 @@ services:
     networks:
       - bee-health
     ports:
-      - "9527:80"
-    restart: always
+      - "80:80"
 
 networks:
   bee-health:

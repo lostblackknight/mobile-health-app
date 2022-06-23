@@ -1,13 +1,6 @@
 # build stage
 FROM node:16-alpine3.15 as build-stage
 
-ENV BASE_API_SERVICE_PROTOCOL=http
-ENV BASE_API_SERVICE_HOST=localhost
-ENV BASE_API_SERVICE_PORT=7001
-
-ENV VUE_APP_BASE_API=${API_SERVICE_PROTOCOL}://${API_SERVICE_HOST}:${API_SERVICE_PORT}/api
-ENV VUE_APP_BASE_WS_API=ws://${API_SERVICE_HOST}:${API_SERVICE_PORT}/api
-
 WORKDIR /app
 
 COPY package*.json ./
@@ -22,7 +15,8 @@ RUN npm run build
 FROM nginx:1.21.6 as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/replace.sh /
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "replace.sh"]
