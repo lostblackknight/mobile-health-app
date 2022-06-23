@@ -8,7 +8,7 @@ services:
     image: bee-health-app:latest
     container_name: bee-health-app
     env_file:
-      - docker/bee-health-app/env/bee-health-app.env
+      - ./docker/bee-health-app/env/bee-health-app.env
     networks:
       - bee-health
     ports:
