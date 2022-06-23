@@ -9,11 +9,7 @@ services:
     container_name: bee-health-app
     env_file:
       - ./docker/bee-health-app/env/bee-health-app.env
-    networks:
-      - bee-health
-    ports:
-      - "80:80"
-
-networks:
-  bee-health:
-    external: true
+    environment:
+      # 服务器的ip地址
+      BASE_API_HOST: 192.168.86.131
+    network_mode: host
