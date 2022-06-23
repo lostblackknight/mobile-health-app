@@ -1,8 +1,6 @@
 # build stage
 FROM node:16-alpine3.15 as build-stage
 
-ENV NODE_ENV=production
-
 ENV BASE_API_SERVICE_PROTOCOL=http
 ENV BASE_API_SERVICE_HOST=localhost
 ENV BASE_API_SERVICE_PORT=7001
